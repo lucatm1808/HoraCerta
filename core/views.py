@@ -14,3 +14,9 @@ def tela_perfil(request):
 
 def tela_register(request):
     return render(request, 'register.html')
+
+def tela_resumo_horas(request):
+    return render(request, 'resumo_horas.html')
+
+def tela_envio_comprovante(request):
+    return render(request, 'envio_comprovante.html')    

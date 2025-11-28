@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HoraCerta - Resumo de Horas</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'resumo_horas.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Hora Certa</h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'kaylane_home' %}">Início</a></li>
+                    <li><a href="{% url 'criar_evento' %}">Eventos</a></li>
+                    <li><a href="#">Carteira</a></li>
+                    <li><a href="{% url 'perfil' %}">Perfil</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="resumo-section">
+                <h2>Resumo de Horas Complementares</h2>
+                <div class="horas-info">
+                    <div class="info-box">
+                        <h3>Total de Horas Concluídas</h3>
+                        <p>120h / 120h</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>Pendências</h3>
+                        <p>2 pendências</p>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <h3>Metas do Curso</h3>
+                    <div class="progress-container">
+                        <div class="progress">
+                            <div class="progress-bar-fill" style="width: 100%;"></div>
+                        </div>
+                        <span class="progress-text">120/120h</span>
+                    </div>
+                </div>
+                <div class="categories">
+                    <div class="category">
+                        <h4>Eventos Acadêmicos</h4>
+                        <div class="category-progress">
+                            <div class="category-progress-fill" style="width: 80%;"></div>
+                        </div>
+                        <span class="category-progress-text">40/50h</span>
+                    </div>
+                    <div class="category">
+                        <h4>Extensão</h4>
+                        <div class="category-progress">
+                            <div class="category-progress-fill" style="width: 100%;"></div>
+                        </div>
+                        <span class="category-progress-text">20/20h</span>
+                    </div>
+                    <div class="category">
+                        <h4>Cultura</h4>
+                        <div class="category-progress">
+                            <div class="category-progress-fill" style="width: 50%;"></div>
+                        </div>
+                        <span class="category-progress-text">10/20h</span>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button>Explorar Eventos</button>
+                    <button>Exportar</button>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

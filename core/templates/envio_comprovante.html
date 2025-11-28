@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HoraCerta - Enviar Comprovante</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'comprovante.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Hora Certa</h1>
+            <nav>
+                <ul>
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#">Eventos</a></li>
+                    <li><a href="#">Carteira</a></li>
+                    <li><a href="#">Perfil</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="form-section">
+                <h2>Enviar Comprovante</h2>
+                <p>Preencha os dados abaixo para validar suas horas complementares.</p>
+                <form action="#" method="post" enctype="multipart/form-data">
+                    <div class="upload-area">
+                        <label for="file-upload">
+                            Arraste e solte o arquivo aqui ou <span>Selecionar arquivo</span>
+                        </label>
+                        <input type="file" id="file-upload" accept=".pdf, .jpg, .png, .jpeg" />
+                    </div>
+                    <div class="input-group">
+                        <label for="emissor">Emissor</label>
+                        <select id="emissor">
+                            <option value="0">Selecione o emissor</option>
+                            <option value="1">Emissor 1</option>
+                            <option value="2">Emissor 2</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="carga">Carga horária no documento</label>
+                        <input type="text" id="carga" placeholder="Ex: 40 horas" />
+                    </div>
+                    <div class="input-group">
+                        <label for="data-evento">Data do evento</label>
+                        <input type="date" id="data-evento" />
+                    </div>
+                    <div class="checkbox-group">
+                        <label>Requisitos do certificado</label>
+                        <input type="checkbox" id="cnpj" />
+                        <label for="cnpj">Contém CNPJ do emissor</label>
+                        <input type="checkbox" id="assinatura" />
+                        <label for="assinatura">Contém assinatura digital ou manual</label>
+                        <input type="checkbox" id="qr-code" />
+                        <label for="qr-code">Contém QR Code para verificação</label>
+                    </div>
+                    <div class="buttons">
+                        <button type="reset">Cancelar</button>
+                        <button type="submit">Enviar para análise</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
