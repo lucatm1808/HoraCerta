@@ -1,0 +1,90 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'perfil.css' %}">
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Perfil - Hora Certa</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <img src="{% static 'logo.png' %}" class="logo-icon" alt="Logo Hora Certa">
+      <span class="Hora">Hora</span><span class="Certa">Certa</span>
+    </div>
+    <nav>
+      <a href="{% url 'kaylane_home' %}">Início</a>
+      <a href="{% url 'criar_evento' %}">Eventos</a>
+      <a href="#">Certificados</a>
+      <a href="{% url 'perfil' %}" class="ativo">Perfil</a>
+      <div class="foto-perfil-nav">
+        <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" alt="Usuário">
+      </div>
+    </nav>
+  </header>
+
+  <main class="container main-content">
+    <div class="card">
+      <h2>Editar Perfil</h2>
+
+      <div class="perfil-info">
+        <div class="foto-perfil">
+          <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" alt="Avatar">
+        </div>
+
+        <div class="inputs">
+          <label>Nome do usuário</label>
+          <input type="text" placeholder="Nome do usuário" name="nome">
+          <label>E-mail</label>
+          <div class="email-field">
+            <span>nomeusuário@puc-rio.br</span>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="academico">
+        <h3>Informações Acadêmicas</h3>
+        <div class="linha">
+          <div>
+            <p class="titulo">Curso</p>
+            <p>Ciência da Computação</p>
+          </div>
+          <a href="#">Solicitar modificação do curso</a>
+        </div>
+        <p class="titulo">Período</p>
+        <p>8º</p>
+        <div class="linha">
+          <div>
+            <p class="titulo">Interesses</p>
+            <p>Design de Interfaces, Desenvolvimento Web, Gestão de Projetos</p>
+          </div>
+          <a href="#">Editar interesses</a>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="senha">
+        <h3>Atualizar Senha</h3>
+        <label>Senha atual</label>
+        <input type="password" value="********">
+        <label>Nova senha</label>
+        <input type="password" value="********">
+        <label>Confirmar nova senha</label>
+        <input type="password" value="********">
+      </div>
+
+      <div class="botoes">
+        <a href="{% url 'criar_evento' %}" class="cancelar">Cancelar</a>
+        <button class="confirmar">Confirmar alteração</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

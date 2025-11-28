@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Inscrição - Hora Certa</title>
+  <link rel="stylesheet" href="{% static 'inscricao.css' %}">
+</head>
+<body>
+  <!-- overlay que escurece o fundo -->
+  <div class="overlay"></div>
+
+  <!-- wrapper para centralizar verticalmente -->
+  <div class="modal-wrapper" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+    <div class="card">
+      <div class="card-top">
+        <img src="{% static 'logo.png' %}" alt="Hora Certa" class="card-logo">
+        <div class="brand">Hora <span class="brand-accent">Certa</span></div>
+      </div>
+
+      <h1 id="modal-title">Confirme sua inscrição</h1>
+      <p class="subtitle">Para o evento: "Nome do Evento"</p>
+
+      {% if confirmed %}
+        <div class="alert success">Inscrição confirmada para {{ email }}.</div>
+      {% endif %}
+
+      <form method="post" action="">
+        {% csrf_token %}
+        <label for="email" class="label-primary">E-mail institucional</label>
+        <input id="email" type="email" name="email" class="modal-input" placeholder="seu.nome@instituicao.br" required>
+
+        <div class="checkbox-row">
+          <input id="terms" type="checkbox" name="terms" required>
+          <label for="terms" class="checkbox-label">Eu li e aceito os <a href="#">Termos de Uso</a> e a <a href="#">Política de Privacidade</a>.</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Confirmar inscrição</button>
+        <a href="{% url 'criar_evento' %}" class="btn btn-ghost">Cancelar</a>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

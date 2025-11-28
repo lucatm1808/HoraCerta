@@ -1,0 +1,33 @@
+form label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6.4px;
+  margin-top: 16px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 11.2px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 15.2px;
+  color: #111827;
+  background: white;
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.12);
+}
+
+textarea { min-height: 80px; resize: vertical; }
+
+.row { display: flex; gap: 16px; }
+.col { flex: 1; }
+
+.card h1, .card h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}

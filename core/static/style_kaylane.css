@@ -1,0 +1,140 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8fafc;
+  margin: 0;
+  color: #1f2937;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 40px;
+  background-color: #fff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo h1 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.menu a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #1f2937;
+}
+
+.menu a.ativo {
+  border-bottom: 2px solid #06b6d4;
+  padding-bottom: 3px;
+}
+
+.container {
+  display: flex;
+  gap: 30px;
+  padding: 30px 40px;
+}
+
+.filtros {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  width: 230px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.filtros h2 {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.filtros label {
+  display: block;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.filtros select {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.conteudo {
+  flex: 1;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.conteudo h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+.botoes-topo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.botoes-topo label {
+  font-size: 14px;
+}
+
+.btn-aprovar {
+  background-color: #06b6d4;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.btn-rejeitar {
+  background-color: #facc15;
+  color: #1f2937;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.tabela th, .tabela td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tabela th {
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: #374151;
+}
+
+.tabela tr:hover {
+  background-color: #f3f4f6;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.2);
+}
+
