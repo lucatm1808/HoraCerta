@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 def tela_index_kaylane(request):
-    return render(request, 'index_kaylane.html')
+    return render(request, 'validacao_horas.html')
 
 def tela_criar_evento(request):
     return render(request, 'criar_evento.html')
@@ -20,3 +20,9 @@ def tela_resumo_horas(request):
 
 def tela_envio_comprovante(request):
     return render(request, 'envio_comprovante.html')    
+
+def tela_evento(request):
+    return render(request, 'evento.html')
+
+def tela_eventos_pagina(request):
+    return render(request, 'eventos_pagina.html')

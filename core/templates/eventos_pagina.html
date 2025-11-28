@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hora Certa — Eventos</title>
+    <link rel="stylesheet" href="{% static 'style-evento.css' %}">
+  </head>
+  <body style="background-color:#f3f4f6;">
+    <div class="fonte">
+      <div style="border:2px solid #e5e7eb; background-color:#ffffff;">
+        <div style="text-align:left; padding:10px;">
+          <span style="color:#05AFF2; font-weight:bold;">Hora Certa</span>
+          <a href="#" style="margin-left:16px; color:#4b5563; text-decoration:none;">Categorias</a>
+          <a href="#" style="margin-left:8px; color:#4b5563; text-decoration:none;">Minha carteira</a>
+          <a href="#" style="margin-left:8px; color:#4b5563; text-decoration:none;">Criar evento</a>
+          <a href="#" style="margin-left:8px; color:#4b5563; text-decoration:none;">Admin</a>
+          <span style="float:right;">
+            <input type="search" placeholder="Procure eventos que valem horas…" style="background-color:#eef2f7; border:2px solid #e5e7eb; padding:6px; width:260px; color:#111827;" />
+          </span>
+        </div>
+      </div>
+
+      <div style="max-width:1100px; margin:16px auto;">
+        <h2 class="titulo" style="font-size:22px; margin-bottom:2px;">Eventos</h2>
+        <p class="linha" style="margin-top:0;">Encontre os melhores eventos para suas horas complementares.</p>
+
+        <div style="margin:12px 0;">
+          <a class="pill ativa" href="#" style="margin-bottom:6px;">Eventos Acadêmicos</a>
+          <a class="pill" href="#" style="margin-bottom:6px;">Extensão</a>
+          <a class="pill" href="#" style="margin-bottom:6px;">Cultura</a>
+          <a class="pill" href="#" style="margin-bottom:6px;">Carreira</a>
+          <a class="pill" href="#" style="margin-bottom:6px;">Esporte</a>
+        </div>
+
+        <div class="card" style="padding:0; margin-top:12px;">
+          <div style="height:170px; background-position:center; background-size:cover; border-bottom:2px solid #e5e7eb; background-image:url('https://images.ctfassets.net/lzny33ho1g45/66htcVa9cVmb0Qi82tXLGC/2ee85099eb977c4be48fd0c7aa7129f6/Group_12762.jpg?fm=jpg&q=31&fit=thumb&w=1520&h=760');"></div>
+          <div style="padding:12px;">
+            <p class="tag">Vale 2h em Eventos Acadêmicos</p>
+            <h3 class="titulo">Semana de Engenharia: Palestra de IA</h3>
+            <p class="linha">12/10, 18:00 · Auditório RDC / Online</p>
+            <p class="linha">Organizador: <span style="color:#374151; font-weight:bold;">Departamento de Engenharia</span></p>
+            <p class="linha">Requisitos: presença + certificado</p>
+            <a class="botao" href="evento.html" style="display:block; text-align:center; margin-top:10px;">Ver detalhes</a>
+          </div>
+        </div>
+
+        <div class="card" style="padding:0;">
+          <div style="height:170px; background-position:center; background-size:cover; border-bottom:2px solid #e5e7eb; background-image:url('https://digitalleadership.com/wp-content/uploads/2022/06/Design-Thinking-Idea-Generation-Technique.webp');"></div>
+          <div style="padding:12px;">
+            <p class="tag">Vale 2h em Eventos Acadêmicos</p>
+            <h3 class="titulo">Workshop de Design Thinking</h3>
+            <p class="linha">15/10, 14:00 · Sala 302, Bloco C</p>
+            <p class="linha">Organizador: <span style="color:#374151; font-weight:bold;">Curso de Design</span></p>
+            <p class="linha">Requisitos: presença + certificado</p>
+            <a class="botao" href="#" style="display:block; text-align:center; margin-top:10px;">Ver detalhes</a>
+          </div>
+        </div>
+
+        <div class="card" style="padding:0;">
+          <div style="height:170px; background-position:center; background-size:cover; border-bottom:2px solid #e5e7eb; background-image:url('https://jornaldr1.com.br/wp-content/uploads/2024/07/Copia-de-CLUBE-DE-CINEMA-NA-PRACA-DIA1-27-scaled.jpg');"></div>
+          <div style="padding:12px;">
+            <p class="tag" style="background-color:#fff7ed; color:#b45309;">Vale 3h em Cultura</p>
+            <h3 class="titulo">Cineclube: Cinema Novo</h3>
+            <p class="linha">18/10, 19:00 · Auditório Principal</p>
+            <p class="linha">Organizador: <span style="color:#374151; font-weight:bold;">Centro Acadêmico de Cinema</span></p>
+            <p class="linha">Requisitos: presença + relatório</p>
+            <a class="botao" href="#" style="display:block; text-align:center; margin-top:10px;">Ver detalhes</a>
+          </div>
+        </div>
+
+        <div class="card" style="padding:0;">
+          <div style="height:170px; background-position:center; background-size:cover; border-bottom:2px solid #e5e7eb; background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3S520a5c4f-AYahpxuE-x6lSTLXYLcC67rQ&s');"></div>
+          <div style="padding:12px;">
+            <p class="tag" style="background-color:#ecfeff; color:#0369a1;">Vale 4h em Extensão</p>
+            <h3 class="titulo">Feira de Carreiras 2024</h3>
+            <p class="linha">22/10, 09:00 - 17:00 · Ginásio Poliesportivo</p>
+            <p class="linha">Organizador: <span style="color:#374151; font-weight:bold;">Pró-Reitoria de Graduação</span></p>
+            <p class="linha">Requisitos: presença</p>
+            <a class="botao" href="#" style="display:block; text-align:center; margin-top:10px;">Ver detalhes</a>
+          </div>
+        </div>
+
+        <div class="card" style="border-color:#e5e7eb; text-align:center;">
+          <a class="botao" href="#" style="float:left;">« Anterior</a>
+          <a class="botao" href="#" style="float:right;">Próximo »</a>
+          <h3 class="titulo" style="margin:6px 0;">Setembro</h3>
+          <div style="clear:both;"></div>
+          <table border-color="1" style="margin:10px auto;">
+            <tr><td>D</td><td>S</td><td>T</td><td>Q</td><td>Q</td><td>S</td><td>S</td></tr>
+            <tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr>
+            <tr><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td></tr>
+            <tr><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td></tr>
+            <tr><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td></tr>
+            <tr><td>29</td><td>30</td><td></td><td></td><td></td><td></td><td></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

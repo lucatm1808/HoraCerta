@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+{% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hora Certa — Palestra sobre IA</title>
+    <link rel="stylesheet" href="{% static 'style-evento.css' %}">
+  </head>
+  <body style="background-color:#f3f4f6;">
+    <div class="fonte">
+      <div style="border:2px solid #e5e7eb; background-color:#ffffff;">
+        <div style="text-align:left; padding:10px;">
+          <a href="{% url 'kaylane_home' %}" style="color:#05AFF2; font-weight:bold; text-decoration:none;">Hora Certa</a>
+          <a href="{% url 'kaylane_home' %}" style="margin-left:16px; color:#4b5563; text-decoration:none;">Início</a>
+          <a href="{% url 'criar_evento' %}" style="margin-left:8px; color:#4b5563; text-decoration:none;">Eventos</a>
+          <a href="{% url 'envio_comprovante' %}" style="margin-left:8px; color:#4b5563; text-decoration:none;">Comprovar</a>
+          <a href="{% url 'perfil' %}" style="margin-left:8px; color:#4b5563; text-decoration:none;">Perfil</a>
+          <span style="float:right;">
+            <input type="search" placeholder="Pesquisar…" style="background-color:#eef2f7; border:2px solid #e5e7eb; padding:6px; width:220px; color:#111827;" />
+          </span>
+        </div>
+      </div>
+
+      <div style="max-width:1100px; margin:16px auto;">
+        <div class="card" style="border-color:#e5e7eb; background-color:#ffffff;">
+          <p class="linha"><a href="/" style="color:#6b7280; text-decoration:none;">Eventos</a> / <span style="color:#111827;">Palestra sobre IA e o Futuro do Trabalho</span></p>
+          <h1 class="titulo" style="font-size:28px;">Palestra sobre IA e o Futuro do Trabalho</h1>
+          <p class="linha">Explore as implicações da inteligência artificial no mercado de trabalho e como se preparar para as mudanças.</p>
+          <p class="linha">20 de Julho, 2024 · 14:00-16:00 (UTC-3)</p>
+          <p class="linha">Auditório Principal · Campus Centro</p>
+          <p class="linha">Organizado por: <span style="color:#374151; font-weight:bold;">Departamento de Ciência da Computação</span></p>
+          <a href="#" class="linha" style="color:#05AFF2; text-decoration:underline;">Mais eventos deste organizador</a>
+        </div>
+
+        <div class="card" style="padding:0;">
+          <img class="banner" src="https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2023/11/pessoa-que-usa-a-ferramenta-ai-no-trabalho.jpg?w=1200&h=675&crop=1" alt="Imagem do evento IA no trabalho" />
+        </div>
+
+        <div class="card" style="padding:0;">
+          <div style="padding:10px; border-bottom:2px solid #e5e7eb; background-color:#ffffff;">
+            <a class="pill ativa" href="#" style="margin-right:8px;">Descrição</a>
+            <a class="pill" href="#" style="margin-right:8px;">FAQ</a>
+            <a class="pill" href="#" style="margin-right:8px;">Como comprovar</a>
+            <a class="pill" href="#">Quem valida</a>
+          </div>
+          <div style="padding:12px;">
+            <p class="linha" style="color:#374151;">
+              Esta palestra aborda o impacto da inteligência artificial no mercado de trabalho, discutindo as novas oportunidades e desafios que surgem com a automação e a evolução das profissões. Serão apresentados casos de uso, tendências e estratégias para se adaptar a essa nova realidade.
+            </p>
+          </div>
+        </div>
+
+        <div class="card" style="padding:12px;">
+          <p class="tag" style="background-color:#ecfeff; color:#0369a1;">2h em Eventos Acadêmicos</p>
+          <h3 class="titulo">Requisitos</h3>
+          <p class="linha">Certificado</p>
+          <p class="linha">Check-in por QR</p>
+          <p class="linha">Documento de Identidade</p>
+
+          <h3 class="titulo" style="margin-top:10px;">Limites</h3>
+          <p class="linha">Máx. 30h/ano nesta categoria</p>
+
+          <a class="botao" href="#" style="display:block; text-align:center; margin-top:12px;">Inscrever-se</a>
+          <a class="botao" href="#" style="display:block; text-align:center; margin-top:8px; background-color:#ffffff; color:#05AFF2;">Fazer check-in (QR)</a>
+          <a class="botao" href="#" style="display:block; text-align:center; margin-top:8px; background-color:#ffffff; color:#05AFF2;">Enviar comprovante</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

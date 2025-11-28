@@ -1,0 +1,59 @@
+.main-img{
+  width: 360px;
+  border:2px solid black;
+}
+.main-link{ border:solid yellow; }
+.poster{ width: 100px; }
+.fonte{ font-family: "Times New Roman", Times, serif; }
+.card{
+  border:2px solid #d1d5db;
+  background-color:#ffffff;
+  margin:14px 0;
+  padding:12px;
+}
+.banner{
+  width:100%;
+  border:2px solid #e5e7eb;
+}
+.tag{
+  display:inline-block;
+  background-color:#e6f3ff;
+  color:#05AFF2;
+  border:2px solid #bfdbfe;
+  padding:4px 8px;
+  margin-top:8px;
+  margin-bottom:6px;
+}
+.titulo{
+  color:#111827;
+  font-weight:bold;
+  margin:6px 0;
+}
+.linha{
+  color:#6b7280;
+  margin:4px 0;
+}
+.botao{
+  display:inline-block;
+  background-color:#05AFF2;
+  color:white;
+  border:2px solid #05C7F2;
+  text-align:center;
+  padding:8px 12px;
+  margin-top:8px;
+  text-decoration:none;
+}
+.pill{
+  display:inline-block;
+  border:2px solid #dbeafe;
+  background-color:#e6f3ff;
+  color:#05AFF2;
+  padding:6px 10px;
+  margin-right:6px;
+  text-decoration:none;
+}
+.ativa{
+  border-color:#05AFF2;
+  background-color:#dff4ff;
+  color:#05AFF2;
+}
