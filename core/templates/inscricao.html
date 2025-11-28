@@ -8,10 +8,8 @@
   <link rel="stylesheet" href="{% static 'inscricao.css' %}">
 </head>
 <body>
-  <!-- overlay que escurece o fundo -->
   <div class="overlay"></div>
 
-  <!-- wrapper para centralizar verticalmente -->
   <div class="modal-wrapper" role="dialog" aria-labelledby="modal-title" aria-modal="true">
     <div class="card">
       <div class="card-top">
@@ -19,8 +17,8 @@
         <div class="brand">Hora <span class="brand-accent">Certa</span></div>
       </div>
 
-      <h1 id="modal-title">Confirme sua inscrição</h1>
-      <p class="subtitle">Para o evento: "Nome do Evento"</p>
+      <h1 id="modal-title">{{ pagina.titulo }}</h1>
+      <p class="subtitle">{{ pagina.instrucoes }}</p>
 
       {% if confirmed %}
         <div class="alert success">Inscrição confirmada para {{ email }}.</div>
