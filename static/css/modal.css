@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f6f8fa;
+}
+
+.modal {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 800px;
+    height: 400px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    text-align: center;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+    gap: 8px; 
+}
+
+.logo {
+    width: 50px;
+}
+
+.logo-text {
+    font-weight: 600;
+    color: #000; 
+    font-size: 19.2px;
+}
+
+.modal h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.modal h2 {
+    font-size: 19.2px;
+    margin-bottom: 10px;
+}
+
+.modal p {
+    font-size: 14.4px;
+    color: #6b7280;
+    margin-bottom: 20px;
+}
+
+.modal input[type="email"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 20px;
+    font-size: 15.2px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    font-size: 13.6px;
+    color: #374151;
+    margin-bottom: 20px;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.checkbox-container a {
+    color: #3b82f6;
+    text-decoration: none;
+}
+
+.checkbox-container a:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px 0;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.btn.confirm {
+    background-color: #0ea5e9;
+    color: #ffffff;
+}
+
+.btn.confirm:hover {
+    background-color: #0284c7;
+}
+
+.btn.cancel {
+    background-color: #f3f4f6;
+    color: #111827;
+}
+
+.btn.cancel:hover {
+    background-color: #e5e7eb;
+}
+

@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciar Usuários - Hora Certa</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+    }
+    .btn-excluir {
+      background-color: #dc3545;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .btn-excluir:hover {
+      background-color: #c82333;
+    }
+    .alert {
+      padding: 12px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    .alert-error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <img src="{% static 'images/Logo2.png' %}" class="logo-icon" alt="Logo Hora Certa">
+      <span class="Hora">Hora</span><span class="Certa">Certa</span>
+    </div>
+    <nav>
+      <a href="{% url 'home' %}">Início</a>
+      <a href="{% url 'criar_evento' %}">Eventos</a>
+      <a href="{% url 'perfil' %}">Meu Perfil</a>
+      {% if user.is_superuser %}
+        <a href="{% url 'listar_usuarios' %}" class="ativo">Gerenciar Usuários</a>
+      {% endif %}
+      {% if user.is_authenticated %}
+        <a href="{% url 'fazer_logout' %}">Sair</a>
+        <div class="foto-perfil-nav">
+          <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" alt="Usuário">
+          <span>{{ user.first_name|default:user.username }}</span>
+        </div>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>Gerenciar Usuários</h2>
+    
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    {% if user.is_superuser %}
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Curso</th>
+              <th>Período</th>
+              <th>Data de Registro</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+              <td>{{ usuario.id }}</td>
+              <td>{{ usuario.first_name }}</td>
+              <td>{{ usuario.email }}</td>
+              <td>{{ usuario.perfil.curso|default:"Não informado" }}</td>
+              <td>{{ usuario.perfil.periodo|default:"-" }}</td>
+              <td>{{ usuario.date_joined|date:"d/m/Y H:i" }}</td>
+              <td>
+                {% if usuario != user %}
+                <a href="{% url 'excluir_usuario' usuario.id %}" 
+                   onclick="return confirm('Tem certeza que deseja excluir o usuário {{ usuario.first_name }}?')"
+                   class="btn-excluir">Excluir</a>
+                {% else %}
+                <span style="color: #666;">Você</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="7" style="text-align: center;">Nenhum usuário cadastrado</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="card">
+        <div class="alert alert-error">
+          <strong>Acesso negado!</strong> Você não tem permissão para acessar esta página.
+          Apenas administradores podem gerenciar usuários.
+        </div>
+        <a href="{% url 'home' %}" class="cancelar">Voltar para a página inicial</a>
+      </div>
+    {% endif %}
+  </main>
+</body>
+</html>

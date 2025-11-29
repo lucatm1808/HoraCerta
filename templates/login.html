@@ -1,0 +1,40 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/registro.css' %}">
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Hora Certa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="form-container">
+        <img src="{% static 'images/Logo2.png' %}" alt="Logo" class="icon">
+        <h1 class="form-title">Entre na sua conta</h1>
+        <p class="form-text">Informe seu e-mail e senha para acessar</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="email" name="email" class="form-input" placeholder="E-mail" required>
+            <input type="password" name="senha" class="form-input" placeholder="Senha" required>
+
+            <button type="submit" class="btn register">Entrar</button>
+        </form>
+
+        <p class="form-login-text">Não tem uma conta? 
+            <a href="{% url 'registro' %}" class="form-link">Registre-se</a>
+        </p>
+    </div>
+</body>
+</html>

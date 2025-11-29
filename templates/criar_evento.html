@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar Evento - Hora Certa</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/criar_evento.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar específica do criar_evento -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="{% static 'images/Logo2.png' %}" class="logo-icon" alt="Logo Hora Certa">
+      <span class="Hora">Hora</span><span class="Certa">Certa</span>
+    </div>
+    <nav>
+  <a href="{% url 'home' %}">Início</a>
+  <a href="{% url 'criar_evento' %}" class="ativo">Eventos</a>  <!-- Corrigido -->
+  <a href="#">Certificados</a>
+  <a href="{% url 'perfil' %}">Perfil</a>
+  
+  {% if user.is_superuser %}
+    <a href="{% url 'listar_usuarios' %}">Gerenciar Usuários</a>
+  {% endif %}
+  
+  {% if user.is_authenticated %}
+    <a href="{% url 'fazer_logout' %}">Sair</a>
+    <div class="foto-perfil-nav">
+      <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" alt="Usuário">
+      <span>{{ user.first_name|default:user.username }}</span>
+    </div>
+  {% else %}
+    <a href="{% url 'fazer_login' %}">Entrar</a>
+  {% endif %}
+</nav>
+  </header>
+
+  <main class="container main-content">
+    <div class="card">
+      <h1>Criar evento</h1>
+      <p class="subtitle">Preencha os campos abaixo para criar um novo evento.</p>
+
+      {% if success %}
+      <div class="alert success">
+        Evento "{{ titulo }}" salvo com sucesso!
+      </div>
+      {% endif %}
+
+      <form method="post" action="">
+        {% csrf_token %}
+        <label for="titulo">Título do evento*</label>
+        <input type="text" id="titulo" name="titulo" placeholder="Ex: Palestra sobre Inteligência Artificial" required>
+
+        <label for="descricao">Descrição do evento*</label>
+        <textarea id="descricao" name="descricao" placeholder="Descreva o evento, palestrantes, temas abordados, etc." required></textarea>
+
+        <div class="row">
+          <div class="col">
+            <label for="categoria">Categoria sugerida</label>
+            <select id="categoria" name="categoria">
+              <option value="" disabled selected>Selecione a categoria</option>
+              <option value="Palestra">Palestra</option>
+              <option value="Minicurso">Minicurso</option>
+              <option value="Visita Técnica">Visita Técnica</option>
+            </select>
+          </div>
+
+          <div class="col">
+            <label for="formato">Formato</label>
+            <select id="formato" name="formato" required>
+              <option value="" disabled selected>Selecione o formato</option>
+              <option value="presencial">Presencial</option>
+              <option value="remoto">Remoto</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="data">Data*</label>
+            <input type="date" id="data" name="data" required>
+          </div>
+          <div class="col">
+            <label for="hora">Hora*</label>
+            <input type="time" id="hora" name="hora" required>
+          </div>
+        </div>
+
+        <label for="link">Link de inscrição</label>
+        <input type="url" id="link" name="link" placeholder="https://exemplo.com/inscricao">
+
+        <label for="requisitos">Requisitos para comprovação</label>
+        <textarea id="requisitos" name="requisitos" placeholder="Descreva os requisitos para comprovação de horas complementares"></textarea>
+
+        <button type="submit" class="btn">Salvar evento</button>
+      </form>
+    </div>
+  </main>
+</body>
+</html>

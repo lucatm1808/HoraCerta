@@ -1,0 +1,159 @@
+/* reset mínimo */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+
+/* overlay: fundo escuro */
+html, body { height: 100%; background: #bdbdbd; }
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: #f6f8fa;
+  backdrop-filter: blur(2px);
+  z-index: 10;
+}
+
+/* centralização do modal */
+.modal-wrapper {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  padding: 24px;
+}
+
+/* cartão */
+.card {
+  width: 520px;
+  max-width: calc(100% - 48px);
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 26px 28px;
+  box-shadow:
+    0 18px 40px rgba(2,6,23,0.35),
+    0 6px 18px rgba(2,6,23,0.15);
+  text-align: center;
+}
+
+/* área do topo: logo + marca */
+.card-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.card-logo {
+  width: 46px;
+  height: auto;
+  display: block;
+}
+.brand {
+  font-weight: 700;
+  font-size: 18px;
+  color: #111827;
+}
+.brand-accent { color: #0ea5e9; }
+
+/* título e subtítulo */
+.card h1 {
+  font-size: 20px;
+  margin-top: 4px;
+  margin-bottom: 6px;
+  color: #111827;
+}
+.subtitle {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+/* alerta de confirmação */
+.alert.success {
+  background: #ecfdf5;
+  color: #065f46;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  text-align: left;
+}
+
+/* label + input */
+.label-primary {
+  display: block;
+  text-align: left;
+  font-weight: 600;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 24px;
+  border: 1px solid #e5e7eb;
+  font-size: 15px;
+  outline: none;
+  transition: box-shadow .12s ease, border-color .12s ease;
+  margin-bottom: 12px;
+}
+.modal-input:focus {
+  box-shadow: 0 6px 18px rgba(14,165,233,0.12);
+  border-color: #0ea5e9;
+}
+
+/* checkbox linha */
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: #374151;
+  margin-bottom: 16px;
+  text-align: left;
+}
+.checkbox-row input[type="checkbox"] { width: 16px; height: 16px; }
+
+/* links dentro do label */
+.checkbox-label a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+.checkbox-label a:hover { text-decoration: underline; }
+
+/* botões */
+.btn {
+  display: inline-block;
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 28px;
+  font-size: 15px;
+  cursor: pointer;
+  border: none;
+  margin-bottom: 10px;
+  text-decoration: none;
+}
+
+/* botão principal azul */
+.btn-primary {
+  background: linear-gradient(0deg,#09a7e3,#0ea5e9);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(14,165,233,0.18);
+}
+.btn-primary:hover { filter: brightness(.95); }
+
+/* botão secundário claro */
+.btn-ghost {
+  background: #f3f4f6;
+  color: #111827;
+  box-shadow: none;
+}
+.btn-ghost:hover { background: #e9ecef; }
+
+/* responsividade */
+@media (max-width: 480px) {
+  .card { padding: 20px; width: 92%; }
+  .card h1 { font-size: 18px; }
+  .brand { font-size: 16px; }
+}

@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Perfil - Hora Certa</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/perfil.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar específica do perfil -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="{% static 'images/Logo2.png' %}" class="logo-icon" alt="Logo Hora Certa">
+      <span class="Hora">Hora</span><span class="Certa">Certa</span>
+    </div>
+    <nav>
+      <a href="{% url 'home' %}">Início</a>
+      <a href="{% url 'criar_evento' %}">Eventos</a>
+      <a href="#">Certificados</a>
+      <a href="{% url 'perfil' %}" class="ativo">Perfil</a>
+      
+      {% if user.is_superuser %}
+        <a href="{% url 'listar_usuarios' %}">Gerenciar Usuários</a>
+      {% endif %}
+      
+      {% if user.is_authenticated %}
+        <a href="{% url 'fazer_logout' %}">Sair</a>
+        <div class="foto-perfil-nav">
+          <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" alt="Usuário">
+          <span>{{ user.first_name|default:user.username }}</span>
+        </div>
+      {% else %}
+        <a href="{% url 'fazer_login' %}">Entrar</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main class="container main-content">
+    <div class="card">
+      <h2>Editar Perfil</h2>
+      
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="POST">
+        {% csrf_token %}
+        
+        <div class="perfil-info">
+          <div class="foto-perfil">
+            <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" alt="Avatar">
+          </div>
+
+          <div class="inputs">
+            <label>Nome do usuário</label>
+            <input type="text" placeholder="Nome do usuário" name="nome" value="{{ user.first_name }}" required>
+            <label>E-mail</label>
+            <input type="email" name="email" value="{{ user.email }}" required>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="academico">
+          <h3>Informações Acadêmicas</h3>
+          <div class="linha">
+            <div>
+              <label class="titulo">Curso</label>
+              <input type="text" name="curso" value="{{ perfil.curso|default:'' }}" placeholder="Seu curso">
+            </div>
+          </div>
+          <label class="titulo">Período</label>
+          <input type="number" name="periodo" value="{{ perfil.periodo|default:'' }}" placeholder="Período atual" min="1" max="20">
+          <div class="linha">
+            <div>
+              <label class="titulo">Interesses</label>
+              <textarea name="interesses" placeholder="Seus interesses acadêmicos e profissionais">{{ perfil.interesses|default:'' }}</textarea>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="senha">
+          <h3>Atualizar Senha</h3>
+          <label>Senha atual</label>
+          <input type="password" name="senha_atual" placeholder="Digite sua senha atual">
+          <label>Nova senha</label>
+          <input type="password" name="nova_senha" placeholder="Digite a nova senha">
+          <label>Confirmar nova senha</label>
+          <input type="password" name="confirmar_senha" placeholder="Confirme a nova senha">
+        </div>
+
+        <div class="botoes">
+          <a href="{% url 'criar_evento' %}" class="cancelar">Cancelar</a>
+          <button type="submit" class="confirmar">Confirmar alteração</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>
+</html>

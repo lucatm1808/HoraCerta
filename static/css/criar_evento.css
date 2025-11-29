@@ -1,0 +1,71 @@
+/* Estilos específicos para criar evento */
+.card h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.subtitle {
+  color: #6b7280;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+form label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6.4px;
+  margin-top: 16px;
+  color: #374151;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 11.2px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 15.2px;
+  color: #111827;
+  background: white;
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.12);
+}
+
+textarea { 
+  min-height: 80px; 
+  resize: vertical; 
+}
+
+.row { 
+  display: flex; 
+  gap: 16px; 
+  margin-bottom: 16px;
+}
+
+.col { 
+  flex: 1; 
+}
+
+.btn {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+  width: auto;
+  min-width: 150px;
+}
+
+.btn:hover {
+  background-color: #2563eb;
+}

@@ -1,0 +1,49 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/registro.css' %}">
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuário</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="form-container">
+        <img src="{% static 'images/Logo2.png' %}" alt="Logo" class="icon">
+        <h1 class="form-title">Crie sua conta</h1>
+        <p class="form-text">Preencha os campos abaixo para se registrar</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="nome" class="form-input" placeholder="Nome completo" required>
+            <input type="email" name="email" class="form-input" placeholder="E-mail" required>
+            <input type="password" name="senha" class="form-input" placeholder="Senha" required>
+            <input type="password" name="confirmar" class="form-input" placeholder="Confirmar senha" required>
+
+            <label class="checkbox-container">
+                <input type="checkbox" class="form-checkbox" required>
+                Eu li e aceito os 
+                <a href="#" class="form-link">Termos de Uso</a> e a 
+                <a href="#" class="form-link">Política de Privacidade</a>.
+            </label>
+
+            <button type="submit" class="btn register">Registrar</button>
+        </form>
+
+        <p class="form-login-text">Já tem uma conta? 
+            <a href="{% url 'fazer_login' %}" class="form-link">Entrar</a>  <!-- CORRIGIDO -->
+        </p>
+    </div>
+</body>
+</html>
