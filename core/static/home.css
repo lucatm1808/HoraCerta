@@ -1,0 +1,49 @@
+.home-card {
+  text-align: left;
+}
+
+.home-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.home-subtitle {
+  font-size: 15px;
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+.home-texto {
+  font-size: 15px;
+  color: #374151;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.home-actions .btn {
+  width: auto;
+  padding-inline: 24px;
+}
+
+.btn-secondary {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+.btn-secondary:hover {
+  background-color: #d1d5db;
+}
+
+nav a.ativo {
+  font-weight: 600;
+  color: #111827;
+}
