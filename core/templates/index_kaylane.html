@@ -21,6 +21,8 @@
       <a href="{% url 'criar_evento' %}">Eventos</a>
       <a href="{% url 'resumo_horas' %}">Resumo de Horas</a>
       <a href="{% url 'perfil' %}">Perfil</a>
+      <!-- Botão de modo escuro -->
+      <button id="theme-toggle" class="theme-toggle">Modo escuro</button>
     </nav>
   </header>
 
@@ -36,5 +38,7 @@
       </div>
     </div>
   </main>
+
+  <script src="{% static 'theme.js' %}"></script>
 </body>
 </html>

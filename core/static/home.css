@@ -47,3 +47,78 @@ nav a.ativo {
   font-weight: 600;
   color: #111827;
 }
+/* Botão de alternância de tema */
+.theme-toggle {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.theme-toggle:hover {
+  background: #f3f4f6;
+}
+
+/* ---------- MODO ESCURO ---------- */
+
+body.dark {
+  background-color: #020617; /* fundo geral escuro */
+  color: #e5e7eb;
+}
+
+/* Navbar em modo escuro */
+body.dark .navbar {
+  background-color: #020617;
+  border-bottom-color: #1e293b;
+}
+
+body.dark .logo .Hora,
+body.dark .logo .Certa {
+  filter: brightness(1.1);
+}
+
+/* Links do menu */
+body.dark nav a {
+  color: #e5e7eb;
+}
+
+body.dark nav a:hover,
+body.dark nav a.ativo {
+  color: #bfdbfe;
+}
+
+/* Card principal da home */
+body.dark .home-card {
+  background-color: #020617;
+  border: 1px solid #1f2937;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+body.dark .home-title,
+body.dark .home-subtitle,
+body.dark .home-texto {
+  color: #e5e7eb;
+}
+
+/* Botões na home em modo escuro */
+body.dark .btn {
+  background-color: #2563eb;
+  color: #e5e7eb;
+}
+
+body.dark .btn:hover {
+  background-color: #1d4ed8;
+}
+
+body.dark .btn.btn-secondary {
+  background-color: transparent;
+  color: #e5e7eb;
+  border: 1px solid #4b5563;
+}
+
+body.dark .btn.btn-secondary:hover {
+  background-color: #111827;
+}
