@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hora Certa - Login Admin</title>
+  <link rel="stylesheet" href="{% static 'style_kaylane.css' %}">
+  <style>
+    .container {
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #05AFF2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #0590d9;
+    }
+    .alert {
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+    .alert.error {
+      background-color: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <img src="{% static 'logo.png' %}" class="logo-icon" alt="Logo Hora Certa">
+      <span class="Hora">Hora</span><span class="Certa">Certa</span>
+    </div>
+    <nav>
+      <a href="{% url 'eventos_pagina' %}">Eventos</a>
+      <a href="{% url 'criar_evento' %}">Criar Evento</a>
+      <a href="{% url 'perfil' %}">Perfil</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h1 style="text-align: center; margin-bottom: 24px;">Login Admin</h1>
+      
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert error">
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      <form method="post" action="{% url 'login_admin' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="senha">Senha de Administrador</label>
+          <input type="password" id="senha" name="senha" placeholder="Digite a senha" required>
+          <small style="color: #6b7280; font-size: 14px;">Senha padrão: admin123</small>
+        </div>
+        
+        <button type="submit" class="btn">Entrar</button>
+      </form>
+      
+      <p style="text-align: center; margin-top: 20px; color: #6b7280;">
+        <a href="{% url 'eventos_pagina' %}" style="color: #05AFF2;">Voltar para Eventos</a>
+      </p>
+    </div>
+  </main>
+</body>
+</html>

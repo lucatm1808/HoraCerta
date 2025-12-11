@@ -1,0 +1,188 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hora Certa - Editar Evento</title>
+  <link rel="stylesheet" href="{% static 'style-evento.css' %}">
+  <link rel="stylesheet" href="{% static 'criar_evento.css' %}">
+</head>
+<body>
+  <!-- Navbar padrão -->
+  <header class="navbar">
+    <a href="{% url 'eventos_pagina' %}" class="logo">
+      <img src="{% static 'logo.png' %}" class="logo-icon" alt="Logo Hora Certa">
+      <span class="Hora">Hora</span><span class="Certa">Certa</span>
+    </a>
+    <nav>
+      <a href="{% url 'eventos_pagina' %}">Eventos</a>
+      <a href="{% url 'perfil' %}">Perfil</a>
+      
+      {% if user.is_superuser %}
+        <a href="{% url 'criar_evento' %}">Criar Evento</a>
+        <a href="{% url 'validacao_horas' %}">Validação</a>
+      {% endif %}
+      
+      <!-- Barra de busca não é necessária nesta página -->
+      
+      <a class="logout-btn" onclick="showLogoutModal()">Sair</a>
+      <div class="avatar"></div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h1 class="titulo">Editar evento</h1>
+      <p class="linha">Atualize os campos abaixo para editar o evento.</p>
+
+      {% if messages %}
+      <div class="messages-container">
+        {% for message in messages %}
+        <div class="message {% if message.tags == 'success' %}message-success{% elif message.tags == 'error' %}message-error{% endif %}">
+          {{ message }}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <form method="post" action="">
+        {% csrf_token %}
+        <label for="titulo">Título do evento*</label>
+        <input type="text" id="titulo" name="titulo" value="{{ evento.titulo }}" required>
+
+        <label for="descricao">Descrição do evento*</label>
+        <textarea id="descricao" name="descricao" required>{{ evento.descricao }}</textarea>
+
+        <div class="row">
+          <div class="col">
+            <label for="categoria">Categoria sugerida</label>
+            <select id="categoria" name="categoria">
+              <option value="" disabled>Selecione a categoria</option>
+              <option value="Palestra" {% if evento.categoria == "Palestra" %}selected{% endif %}>Palestra</option>
+              <option value="Minicurso" {% if evento.categoria == "Minicurso" %}selected{% endif %}>Minicurso</option>
+              <option value="Visita Técnica" {% if evento.categoria == "Visita Técnica" %}selected{% endif %}>Visita Técnica</option>
+            </select>
+          </div>
+
+          <div class="col">
+            <label for="formato">Formato*</label>
+            <select id="formato" name="formato" required>
+              <option value="" disabled>Selecione o formato</option>
+              <option value="presencial" {% if evento.formato == "presencial" %}selected{% endif %}>Presencial</option>
+              <option value="remoto" {% if evento.formato == "remoto" %}selected{% endif %}>Remoto</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="data">Data*</label>
+            <input type="date" id="data" name="data" value="{{ evento.data|date:'Y-m-d' }}" required>
+          </div>
+          <div class="col">
+            <label for="hora">Hora*</label>
+            <input type="time" id="hora" name="hora" value="{{ evento.hora|time:'H:i' }}" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="horas">Horas complementares</label>
+            <input type="number" id="horas" name="horas" value="{{ evento.horas }}">
+          </div>
+          <div class="col">
+            <label for="local">Local</label>
+            <input type="text" id="local" name="local" value="{{ evento.local }}">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="organizador">Organizador</label>
+            <input type="text" id="organizador" name="organizador" value="{{ evento.organizador }}">
+          </div>
+          <div class="col">
+            <label for="imagem_url">URL da Imagem</label>
+            <input type="url" id="imagem_url" name="imagem_url" value="{{ evento.imagem_url }}">
+          </div>
+        </div>
+
+        <label for="link">Link de inscrição</label>
+        <input type="url" id="link" name="link" value="{{ evento.link }}">
+
+        <label for="requisitos">Requisitos para comprovação</label>
+        <textarea id="requisitos" name="requisitos">{{ evento.requisitos }}</textarea>
+
+        <button type="submit" class="btn">Salvar alterações</button>
+        <a href="{% url 'evento' evento.id %}" class="btn btn-secondary">Cancelar</a>
+      </form>
+    </div>
+  </main>
+
+  <!-- Modal de logout -->
+  <div id="logoutModal" class="modal-overlay">
+    <div class="modal">
+      <h3>Confirmar Logout</h3>
+      <p>Tem certeza de que deseja sair da sua conta? Você precisará fazer login novamente para acessar o sistema.</p>
+      <div class="modal-buttons">
+        <button class="modal-btn modal-btn-cancel" onclick="closeLogoutModal()">Cancelar</button>
+        <button class="modal-btn modal-btn-logout" onclick="performLogout()">Sair da Conta</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Funções para o modal de logout
+    function showLogoutModal() {
+      document.getElementById('logoutModal').style.display = 'flex';
+    }
+    
+    function closeLogoutModal() {
+      document.getElementById('logoutModal').style.display = 'none';
+    }
+    
+    function performLogout() {
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '{% url "logout" %}';
+      
+      const csrfInput = document.createElement('input');
+      csrfInput.type = 'hidden';
+      csrfInput.name = 'csrfmiddlewaretoken';
+      csrfInput.value = getCookie('csrftoken');
+      form.appendChild(csrfInput);
+      
+      document.body.appendChild(form);
+      form.submit();
+    }
+    
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    
+    document.getElementById('logoutModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeLogoutModal();
+      }
+    });
+    
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeLogoutModal();
+      }
+    });
+  </script>
+</body>
+</html>

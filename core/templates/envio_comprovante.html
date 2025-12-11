@@ -5,64 +5,331 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HoraCerta - Enviar Comprovante</title>
     {% load static %}
+    <link rel="stylesheet" href="{% static 'style-evento.css' %}">
     <link rel="stylesheet" href="{% static 'comprovante.css' %}">
+    <style>
+        /* Ajustes específicos para compatibilidade */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .form-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .upload-area {
+            margin-bottom: 15px;
+            text-align: center;
+            padding: 30px;
+            border: 2px dashed #05AFF2;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .upload-area:hover, .upload-area.dragover {
+            background-color: #f0f9ff;
+            border-color: #0490d9;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #374151;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 11.2px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15.2px;
+            color: #111827;
+            background: white;
+            outline: none;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+        }
+        
+        .checkbox-group {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .checkbox-item input {
+            margin-right: 10px;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        
+        .btn-cancelar, .btn-enviar {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        
+        .btn-cancelar {
+            background-color: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+        
+        .btn-cancelar:hover {
+            background-color: #e5e7eb;
+        }
+        
+        .btn-enviar {
+            background-color: #05AFF2;
+            color: white;
+            border: 2px solid #05C7F2;
+        }
+        
+        .btn-enviar:hover {
+            background-color: #0490d9;
+        }
+        
+        .link {
+            color: #05AFF2;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Hora Certa</h1>
-            <nav>
-                <ul>
-                    <li><a href="#">Início</a></li>
-                    <li><a href="#">Eventos</a></li>
-                    <li><a href="#">Carteira</a></li>
-                    <li><a href="#">Perfil</a></li>
-                </ul>
-            </nav>
-        </header>
-        <main>
-            <section class="form-section">
-                <h2>Enviar Comprovante</h2>
-                <p>Preencha os dados abaixo para validar suas horas complementares.</p>
-                <form action="#" method="post" enctype="multipart/form-data">
-                    <div class="upload-area">
-                        <label for="file-upload">
-                            Arraste e solte o arquivo aqui ou <span>Selecionar arquivo</span>
-                        </label>
-                        <input type="file" id="file-upload" accept=".pdf, .jpg, .png, .jpeg" />
-                    </div>
-                    <div class="input-group">
-                        <label for="emissor">Emissor</label>
-                        <select id="emissor">
-                            <option value="0">Selecione o emissor</option>
-                            <option value="1">Emissor 1</option>
-                            <option value="2">Emissor 2</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="carga">Carga horária no documento</label>
-                        <input type="text" id="carga" placeholder="Ex: 40 horas" />
-                    </div>
-                    <div class="input-group">
-                        <label for="data-evento">Data do evento</label>
-                        <input type="date" id="data-evento" />
-                    </div>
-                    <div class="checkbox-group">
-                        <label>Requisitos do certificado</label>
-                        <input type="checkbox" id="cnpj" />
-                        <label for="cnpj">Contém CNPJ do emissor</label>
-                        <input type="checkbox" id="assinatura" />
-                        <label for="assinatura">Contém assinatura digital ou manual</label>
-                        <input type="checkbox" id="qr-code" />
-                        <label for="qr-code">Contém QR Code para verificação</label>
-                    </div>
-                    <div class="buttons">
-                        <button type="reset">Cancelar</button>
-                        <button type="submit">Enviar para análise</button>
-                    </div>
-                </form>
-            </section>
-        </main>
+  <!-- Navbar padrão -->
+  <header class="navbar">
+    <a href="{% url 'eventos_pagina' %}" class="logo">
+      <img src="{% static 'logo.png' %}" class="logo-icon" alt="Logo Hora Certa">
+      <span class="Hora">Hora</span><span class="Certa">Certa</span>
+    </a>
+    <nav>
+      <a href="{% url 'eventos_pagina' %}">Eventos</a>
+      <a href="{% url 'resumo_horas' %}">Carteira</a>
+      <a href="{% url 'envio_comprovante' %}">Enviar comprovante</a>
+      <a href="{% url 'listar_inscricoes' %}">Minhas Inscrições</a>
+      <a href="{% url 'perfil' %}">Perfil</a>
+      
+      {% if user.is_superuser %}
+        <a href="{% url 'criar_evento' %}">Criar Evento</a>
+        <a href="{% url 'validacao_horas' %}">Validação</a>
+      {% endif %}
+      
+      <!-- Barra de busca não é necessária nesta página -->
+      
+      <a class="logout-btn" onclick="showLogoutModal()">Sair</a>
+      <div class="avatar"></div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="form-section">
+        <h2 class="titulo">Enviar Comprovante</h2>
+        <p class="linha">Preencha os dados abaixo para validar suas horas complementares.</p>
+        
+        {% if messages %}
+        <div class="messages-container">
+            {% for message in messages %}
+            <div class="message {% if message.tags == 'success' %}message-success{% elif message.tags == 'error' %}message-error{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="upload-area" id="upload-area">
+                <label for="arquivo">
+                    <span id="file-name">Arraste e solte o arquivo aqui ou <span class="link">Selecionar arquivo</span></span>
+                </label>
+                <input type="file" id="arquivo" name="arquivo" accept=".pdf, .jpg, .png, .jpeg" required style="display: none;" />
+            </div>
+            
+            <div class="input-group">
+                <label for="emissor">Emissor</label>
+                <input type="text" id="emissor" name="emissor" placeholder="Nome da instituição/organizador" required />
+            </div>
+            
+            <div class="input-group">
+                <label for="carga_horaria">Carga horária no documento</label>
+                <input type="number" id="carga_horaria" name="carga_horaria" placeholder="Ex: 40" min="1" required />
+            </div>
+            
+            <div class="input-group">
+                <label for="data_evento">Data do evento</label>
+                <input type="date" id="data_evento" name="data_evento" required />
+            </div>
+            
+            <div class="input-group">
+                <label for="categoria_sugerida">Categoria do evento</label>
+                <select id="categoria_sugerida" name="categoria_sugerida" required>
+                    <option value="evento_academico">Evento Acadêmico</option>
+                    <option value="extensao">Extensão</option>
+                    <option value="cultura">Cultura</option>
+                    <option value="carreira">Carreira</option>
+                    <option value="esporte">Esporte</option>
+                    <option value="outros" selected>Outros</option>
+                </select>
+            </div>
+
+            <div class="checkbox-group">
+                <label>Requisitos do certificado</label>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="contem_cnpj" name="contem_cnpj" />
+                    <label for="contem_cnpj">Contém CNPJ do emissor</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="contem_assinatura" name="contem_assinatura" />
+                    <label for="contem_assinatura">Contém assinatura digital ou manual</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="contem_qrcode" name="contem_qrcode" />
+                    <label for="contem_qrcode">Contém QR Code para verificação</label>
+                </div>
+            </div>
+            
+            <div class="buttons">
+                <button type="reset" class="btn-cancelar">Cancelar</button>
+                <button type="submit" class="btn-enviar">Enviar para análise</button>
+            </div>
+        </form>
+    </section>
+  </main>
+
+  <!-- Modal de logout -->
+  <div id="logoutModal" class="modal-overlay">
+    <div class="modal">
+      <h3>Confirmar Logout</h3>
+      <p>Tem certeza de que deseja sair da sua conta? Você precisará fazer login novamente para acessar o sistema.</p>
+      <div class="modal-buttons">
+        <button class="modal-btn modal-btn-cancel" onclick="closeLogoutModal()">Cancelar</button>
+        <button class="modal-btn modal-btn-logout" onclick="performLogout()">Sair da Conta</button>
+      </div>
     </div>
+  </div>
+
+  <script>
+    // Funções para o modal de logout
+    function showLogoutModal() {
+      document.getElementById('logoutModal').style.display = 'flex';
+    }
+    
+    function closeLogoutModal() {
+      document.getElementById('logoutModal').style.display = 'none';
+    }
+    
+    function performLogout() {
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '{% url "logout" %}';
+      
+      const csrfInput = document.createElement('input');
+      csrfInput.type = 'hidden';
+      csrfInput.name = 'csrfmiddlewaretoken';
+      csrfInput.value = getCookie('csrftoken');
+      form.appendChild(csrfInput);
+      
+      document.body.appendChild(form);
+      form.submit();
+    }
+    
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    
+    document.getElementById('logoutModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeLogoutModal();
+      }
+    });
+    
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeLogoutModal();
+      }
+    });
+
+    // Script para upload de arquivo
+    document.addEventListener('DOMContentLoaded', function() {
+        const fileInput = document.getElementById('arquivo');
+        const uploadArea = document.getElementById('upload-area');
+        const fileName = document.getElementById('file-name');
+        
+        uploadArea.addEventListener('click', function(e) {
+            if (e.target !== fileInput) {
+                fileInput.click();
+            }
+        });
+        
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', function() {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                updateFileName();
+            }
+        });
+        
+        fileInput.addEventListener('change', updateFileName);
+        
+        function updateFileName() {
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                fileName.innerHTML = `Arquivo selecionado: <strong>${file.name}</strong> (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+            } else {
+                fileName.innerHTML = 'Arraste e solte o arquivo aqui ou <span class="link">Selecionar arquivo</span>';
+            }
+        }
+    });
+  </script>
 </body>
 </html>

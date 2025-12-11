@@ -1,7 +1,6 @@
 /* reset mínimo */
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
 
-/* overlay: fundo escuro */
 html, body { height: 100%; background: #bdbdbd; }
 .overlay {
   position: fixed;
@@ -11,7 +10,7 @@ html, body { height: 100%; background: #bdbdbd; }
   z-index: 10;
 }
 
-/* centralização do modal */
+
 .modal-wrapper {
   position: fixed;
   inset: 0;
@@ -22,7 +21,7 @@ html, body { height: 100%; background: #bdbdbd; }
   padding: 24px;
 }
 
-/* cartão */
+
 .card {
   width: 520px;
   max-width: calc(100% - 48px);
@@ -35,7 +34,7 @@ html, body { height: 100%; background: #bdbdbd; }
   text-align: center;
 }
 
-/* área do topo: logo + marca */
+
 .card-top {
   display: flex;
   flex-direction: column;
@@ -55,7 +54,7 @@ html, body { height: 100%; background: #bdbdbd; }
 }
 .brand-accent { color: #0ea5e9; }
 
-/* título e subtítulo */
+
 .card h1 {
   font-size: 20px;
   margin-top: 4px;
@@ -68,7 +67,7 @@ html, body { height: 100%; background: #bdbdbd; }
   margin-bottom: 16px;
 }
 
-/* alerta de confirmação */
+
 .alert.success {
   background: #ecfdf5;
   color: #065f46;
@@ -79,7 +78,7 @@ html, body { height: 100%; background: #bdbdbd; }
   text-align: left;
 }
 
-/* label + input */
+
 .label-primary {
   display: block;
   text-align: left;
@@ -103,7 +102,7 @@ html, body { height: 100%; background: #bdbdbd; }
   border-color: #0ea5e9;
 }
 
-/* checkbox linha */
+
 .checkbox-row {
   display: flex;
   align-items: center;
@@ -115,14 +114,14 @@ html, body { height: 100%; background: #bdbdbd; }
 }
 .checkbox-row input[type="checkbox"] { width: 16px; height: 16px; }
 
-/* links dentro do label */
+
 .checkbox-label a {
   color: #3b82f6;
   text-decoration: none;
 }
 .checkbox-label a:hover { text-decoration: underline; }
 
-/* botões */
+
 .btn {
   display: inline-block;
   width: 100%;
@@ -135,7 +134,7 @@ html, body { height: 100%; background: #bdbdbd; }
   text-decoration: none;
 }
 
-/* botão principal azul */
+
 .btn-primary {
   background: linear-gradient(0deg,#09a7e3,#0ea5e9);
   color: #fff;
@@ -143,7 +142,7 @@ html, body { height: 100%; background: #bdbdbd; }
 }
 .btn-primary:hover { filter: brightness(.95); }
 
-/* botão secundário claro */
+
 .btn-ghost {
   background: #f3f4f6;
   color: #111827;
@@ -151,7 +150,7 @@ html, body { height: 100%; background: #bdbdbd; }
 }
 .btn-ghost:hover { background: #e9ecef; }
 
-/* responsividade */
+
 @media (max-width: 480px) {
   .card { padding: 20px; width: 92%; }
   .card h1 { font-size: 18px; }

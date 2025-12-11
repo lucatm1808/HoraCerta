@@ -2,41 +2,228 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Inscrição - Hora Certa</title>
-  <link rel="stylesheet" href="{% static 'inscricao.css' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmar Inscrição - Hora Certa</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 500px;
+      width: 100%;
+      padding: 20px;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+    
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .logo img {
+      height: 40px;
+    }
+    
+    h1 {
+      color: #333;
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 24px;
+      text-align: center;
+    }
+    
+    .subtitle {
+      color: #666;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .evento-info {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+    
+    .info-item {
+      margin-bottom: 10px;
+      display: flex;
+    }
+    
+    .info-label {
+      font-weight: 600;
+      color: #555;
+      min-width: 120px;
+    }
+    
+    .info-value {
+      color: #333;
+      flex: 1;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    
+    .checkbox input[type="checkbox"] {
+      margin-top: 4px;
+    }
+    
+    .checkbox label {
+      color: #555;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    
+    .checkbox a {
+      color: #05AFF2;
+      text-decoration: none;
+    }
+    
+    .checkbox a:hover {
+      text-decoration: underline;
+    }
+    
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+    
+    .btn-primary {
+      background-color: #05AFF2;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: #0490d9;
+    }
+    
+    .btn-secondary {
+      background-color: #f0f0f0;
+      color: #666;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #e0e0e0;
+    }
+    
+    .messages {
+      margin-bottom: 20px;
+    }
+    
+    .alert {
+      padding: 10px 15px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    
+    .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .alert-error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
 </head>
 <body>
-  <div class="overlay"></div>
-
-  <div class="modal-wrapper" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+  <div class="container">
     <div class="card">
-      <div class="card-top">
-        <img src="{% static 'logo.png' %}" alt="Hora Certa" class="card-logo">
-        <div class="brand">Hora <span class="brand-accent">Certa</span></div>
+      <div class="logo">
+        <img src="{% static 'logo.png' %}" alt="Hora Certa">
+        <div style="font-size: 20px; font-weight: bold; margin-top: 10px;">Hora <span style="color: #05AFF2;">Certa</span></div>
       </div>
-
-      <h1 id="modal-title">{{ pagina.titulo }}</h1>
-      <p class="subtitle">{{ pagina.instrucoes }}</p>
-
-      {% if confirmed %}
-        <div class="alert success">Inscrição confirmada para {{ email }}.</div>
-      {% endif %}
-
-      <form method="post" action="">
-        {% csrf_token %}
-        <label for="email" class="label-primary">E-mail institucional</label>
-        <input id="email" type="email" name="email" class="modal-input" placeholder="seu.nome@instituicao.br" required>
-
-        <div class="checkbox-row">
-          <input id="terms" type="checkbox" name="terms" required>
-          <label for="terms" class="checkbox-label">Eu li e aceito os <a href="#">Termos de Uso</a> e a <a href="#">Política de Privacidade</a>.</label>
+      
+      <h1>Confirmar Inscrição</h1>
+      <p class="subtitle">Confirme sua inscrição no evento abaixo</p>
+      
+      {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          {{ message }}
         </div>
-
-        <button type="submit" class="btn btn-primary">Confirmar inscrição</button>
-        <a href="{% url 'criar_evento' %}" class="btn btn-ghost">Cancelar</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+      
+      {% if evento %}
+      <div class="evento-info">
+        <h3 style="margin-top: 0; margin-bottom: 15px; color: #333;">{{ evento.titulo }}</h3>
+        <div class="info-item">
+          <span class="info-label">Data:</span>
+          <span class="info-value">{{ evento.data }}, {{ evento.hora }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Local:</span>
+          <span class="info-value">{{ evento.local|default:"A definir" }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Formato:</span>
+          <span class="info-value">{{ evento.get_formato_display }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Horas:</span>
+          <span class="info-value">{{ evento.horas }}h complementares</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Organizador:</span>
+          <span class="info-value">{{ evento.organizador|default:"Não informado" }}</span>
+        </div>
+      </div>
+      
+      <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+          <div class="checkbox">
+            <input type="checkbox" id="terms" name="terms" required>
+            <label for="terms">
+              Eu li e aceito os <a href="#">Termos de Uso</a> e a 
+              <a href="#">Política de Privacidade</a>. Confirmo que desejo me inscrever neste evento.
+            </label>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Confirmar Inscrição</button>
+        <a href="{% url 'evento' evento.id %}" class="btn btn-secondary">Cancelar</a>
       </form>
+      {% endif %}
     </div>
   </div>
 </body>

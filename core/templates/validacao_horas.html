@@ -5,60 +5,386 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Validação de Horas Complementares</title>
-  <link rel="stylesheet" href="{% static 'validacao_horas.css' %}">
+  <link rel="stylesheet" href="{% static 'style-evento.css' %}">
+  <style>
+    /* Estilos específicos para a página de validação */
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+        display: flex;
+        gap: 20px;
+    }
+    
+    .filtros {
+        flex: 0 0 300px;
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .filtros h2 {
+        margin-top: 0;
+        color: #111827;
+        font-size: 18px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #05AFF2;
+    }
+    
+    .filtros label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 6px;
+        margin-top: 16px;
+        color: #374151;
+        font-size: 14px;
+    }
+    
+    .filtros select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 14px;
+        background: white;
+        color: #111827;
+    }
+    
+    .filtros select:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+    }
+    
+    .btn-filtrar, .btn-limpar {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 15px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        font-size: 14px;
+    }
+    
+    .btn-filtrar {
+        background-color: #05AFF2;
+        color: white;
+        border: 2px solid #05C7F2;
+    }
+    
+    .btn-filtrar:hover {
+        background-color: #0490d9;
+    }
+    
+    .btn-limpar {
+        background-color: #f3f4f6;
+        color: #6b7280;
+        border: 1px solid #d1d5db;
+    }
+    
+    .btn-limpar:hover {
+        background-color: #e5e7eb;
+    }
+    
+    .conteudo {
+        flex: 1;
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .conteudo h2 {
+        margin-top: 0;
+        color: #111827;
+        font-size: 24px;
+        margin-bottom: 8px;
+    }
+    
+    .conteudo p {
+        color: #6b7280;
+        margin-bottom: 25px;
+        font-size: 14px;
+    }
+    
+    .botoes-topo {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .botoes-topo label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+        color: #111827;
+    }
+    
+    .btn-aprovar, .btn-rejeitar {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.2s;
+    }
+    
+    .btn-aprovar {
+        background-color: #10b981;
+        color: white;
+        border: 2px solid #10b981;
+    }
+    
+    .btn-aprovar:hover {
+        background-color: #0da271;
+    }
+    
+    .btn-rejeitar {
+        background-color: #ef4444;
+        color: white;
+        border: 2px solid #ef4444;
+    }
+    
+    .btn-rejeitar:hover {
+        background-color: #dc2626;
+    }
+    
+    .tabela {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .tabela th {
+        background-color: #f8f9fa;
+        color: #374151;
+        font-weight: 600;
+        text-align: left;
+        padding: 12px 15px;
+        border-bottom: 2px solid #e5e7eb;
+        font-size: 14px;
+    }
+    
+    .tabela td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #e5e7eb;
+        color: #4b5563;
+        font-size: 14px;
+    }
+    
+    .tabela tr:hover {
+        background-color: #f9fafb;
+    }
+    
+    .status-pendente { color: #f59e0b; font-weight: 500; }
+    .status-aprovado { color: #10b981; font-weight: 500; }
+    .status-rejeitado { color: #ef4444; font-weight: 500; }
+    
+    .btn-aprovar-individual, .btn-rejeitar-individual {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 5px;
+        font-size: 12px;
+        transition: all 0.2s;
+    }
+    
+    .btn-aprovar-individual {
+        background-color: #10b981;
+        color: white;
+    }
+    
+    .btn-aprovar-individual:hover {
+        background-color: #0da271;
+    }
+    
+    .btn-rejeitar-individual {
+        background-color: #ef4444;
+        color: white;
+    }
+    
+    .btn-rejeitar-individual:hover {
+        background-color: #dc2626;
+    }
+    
+    /* Modal styles */
+    .modal-rejeicao {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+    }
+    
+    .modal-content {
+        background-color: white;
+        margin: 10% auto;
+        padding: 25px;
+        width: 50%;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    
+    .modal-content h3 {
+        margin-top: 0;
+        color: #111827;
+        margin-bottom: 15px;
+    }
+    
+    .modal-content textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 14px;
+        resize: vertical;
+    }
+    
+    .modal-content button {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        margin-right: 10px;
+        transition: all 0.2s;
+    }
+    
+    #btn-confirmar-rejeicao {
+        background-color: #ef4444;
+        color: white;
+        border: 2px solid #ef4444;
+    }
+    
+    #btn-confirmar-rejeicao:hover {
+        background-color: #dc2626;
+    }
+    
+    #btn-cancelar-rejeicao {
+        background-color: #6b7280;
+        color: white;
+        border: 2px solid #6b7280;
+    }
+    
+    #btn-cancelar-rejeicao:hover {
+        background-color: #4b5563;
+    }
+    
+    /* Estilos para quando não houver dados */
+    .tabela tbody tr td[colspan] {
+        text-align: center;
+        color: #9ca3af;
+        font-style: italic;
+        padding: 40px;
+    }
+    
+    /* Link para visualizar comprovante */
+    .tabela a {
+        color: #05AFF2;
+        text-decoration: none;
+    }
+    
+    .tabela a:hover {
+        text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <header class="header">
-    <div class="logo">
-      <img src="{% static 'logo.png' %}" alt="Hora Certa">
-      <h1>Hora Certa</h1>
-    </div>
-    <nav class="menu">
-      <a href="#">Início</a>
-      <a href="#" class="ativo">Eventos</a>
-      <a href="#">Regras</a>
-      <a href="#">Relatórios</a>
-      <div class="perfil"></div>
+  <!-- Navbar padrão -->
+  <header class="navbar">
+    <a href="{% url 'eventos_pagina' %}" class="logo">
+      <img src="{% static 'logo.png' %}" class="logo-icon" alt="Logo Hora Certa">
+      <span class="Hora">Hora</span><span class="Certa">Certa</span>
+    </a>
+       <nav>
+      <a href="{% url 'eventos_pagina' %}">Eventos</a>
+      <a href="{% url 'resumo_horas' %}">Carteira</a>
+      <a href="{% url 'envio_comprovante' %}">Enviar comprovante</a>
+      <a href="{% url 'listar_inscricoes' %}" class="active">Minhas Inscrições</a>
+      <a href="{% url 'perfil' %}">Perfil</a>
+      
+      {% if user.is_superuser %}
+        <a href="{% url 'criar_evento' %}">Criar Evento</a>
+        <a href="{% url 'validacao_horas' %}">Validação</a>
+      {% endif %}
+      
+      <!-- Barra de busca não é necessária nesta página -->
+      
+      <a class="logout-btn" onclick="showLogoutModal()">Sair</a>
+      <div class="avatar"></div>
     </nav>
   </header>
 
   <main class="container">
     <aside class="filtros">
       <h2>Filtros</h2>
-      <label>Curso</label>
-      <select>
-        <option>Todos</option>
-      </select>
+      <form method="get" action="{% url 'validacao_horas' %}">
+        <label>Curso</label>
+        <select name="curso">
+          <option value="Todos" {% if filtro_curso == 'Todos' %}selected{% endif %}>Todos</option>
+          {% for curso in cursos %}
+            <option value="{{ curso }}" {% if filtro_curso == curso %}selected{% endif %}>{{ curso }}</option>
+          {% endfor %}
+        </select>
 
-      <label>Categoria</label>
-      <select>
-        <option>Todas</option>
-      </select>
+        <label>Categoria</label>
+        <select name="categoria">
+          <option value="Todas" {% if filtro_categoria == 'Todas' %}selected{% endif %}>Todas</option>
+          {% for valor, nome in categorias %}
+            <option value="{{ valor }}" {% if filtro_categoria == valor %}selected{% endif %}>{{ nome }}</option>
+          {% endfor %}
+        </select>
 
-      <label>Período</label>
-      <select>
-        <option>Todos</option>
-      </select>
+        <label>Período</label>
+        <select name="periodo">
+          <option value="Todos" {% if filtro_periodo == 'Todos' %}selected{% endif %}>Todos</option>
+          <option value="ultima_semana" {% if filtro_periodo == 'ultima_semana' %}selected{% endif %}>Última semana</option>
+          <option value="ultimo_mes" {% if filtro_periodo == 'ultimo_mes' %}selected{% endif %}>Último mês</option>
+        </select>
 
-      <label>Status</label>
-      <select>
-        <option>Todos</option>
-      </select>
+        <label>Status</label>
+        <select name="status">
+          <option value="Todos" {% if filtro_status == 'Todos' %}selected{% endif %}>Todos</option>
+          <option value="pendente" {% if filtro_status == 'pendente' %}selected{% endif %}>Pendente</option>
+          <option value="aprovado" {% if filtro_status == 'aprovado' %}selected{% endif %}>Aprovado</option>
+          <option value="rejeitado" {% if filtro_status == 'rejeitado' %}selected{% endif %}>Rejeitado</option>
+        </select>
 
-      <label>Organizador</label>
-      <select>
-        <option>Todos</option>
-      </select>
+        <label>Organizador</label>
+        <select name="organizador">
+          <option value="Todos" {% if filtro_organizador == 'Todos' %}selected{% endif %}>Todos</option>
+          {% for org in organizadores %}
+            <option value="{{ org }}" {% if filtro_organizador == org %}selected{% endif %}>{{ org }}</option>
+          {% endfor %}
+        </select>
+
+        <button type="submit" class="btn-filtrar">Aplicar Filtros</button>
+        <a href="{% url 'validacao_horas' %}" class="btn-limpar">Limpar Filtros</a>
+      </form>
     </aside>
 
     <section class="conteudo">
-      <h2>Validação de Horas Complementares</h2>
-      <p>Revise e valide as solicitações de horas dos alunos.</p>
+      <h2 class="titulo">Validação de Horas Complementares</h2>
+      <p class="linha">Revise e valide as solicitações de horas dos alunos.</p>
 
       <div class="botoes-topo">
-        <label><input type="checkbox"> Selecionar Todos</label>
-        <button class="btn-aprovar">Aprovar em Lote</button>
-        <button class="btn-rejeitar">Rejeitar em Lote</button>
+        <label><input type="checkbox" id="selecionar-todos"> Selecionar Todos</label>
+        <button class="btn-aprovar" id="btn-aprovar-lote">Aprovar em Lote</button>
+        <button class="btn-rejeitar" id="btn-rejeitar-lote">Rejeitar em Lote</button>
       </div>
 
       <table class="tabela">
@@ -70,71 +396,292 @@
             <th>Evento</th>
             <th>Categoria Sugerida</th>
             <th>Horas</th>
-            <th>Regras</th>
+            <th>Status</th>
             <th>Comprovante</th>
             <th>Ações</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>Lucas Oliveira</td>
-            <td>Engenharia de Software</td>
-            <td>Workshop de IA</td>
-            <td>Tecnologia</td>
-            <td>4h</td>
-            <td>ℹ</td>
-            <td>👁</td>
-            <td>✔ ✖ ✏</td>
+          {% for comprovante in comprovantes %}
+          <tr data-id="{{ comprovante.id }}">
+            <td><input type="checkbox" class="selecionar-item" value="{{ comprovante.id }}"></td>
+            <td>{{ comprovante.usuario.first_name }} {{ comprovante.usuario.last_name }}</td>
+            <td>{{ comprovante.usuario.perfil.curso|default:"Não informado" }}</td>
+            <td>
+              {% if comprovante.evento %}
+                {{ comprovante.evento.titulo }}
+              {% else %}
+                Evento Externo
+              {% endif %}
+            </td>
+            <td>{{ comprovante.get_categoria_sugerida_display }}</td>
+            <td>{{ comprovante.carga_horaria }}h</td>
+            <td class="status-{{ comprovante.status }}">
+              {{ comprovante.get_status_display }}
+            </td>
+            <td>
+              <a href="{% url 'visualizar_comprovante' comprovante.id %}" target="_blank" title="Visualizar comprovante">
+                👁 Ver
+              </a>
+            </td>
+            <td>
+              {% if comprovante.status == 'pendente' %}
+                <button class="btn-aprovar-individual" data-id="{{ comprovante.id }}" title="Aprovar">✔</button>
+                <button class="btn-rejeitar-individual" data-id="{{ comprovante.id }}" title="Rejeitar">✖</button>
+              {% else %}
+                <span style="color: #9ca3af; font-size: 12px;">Processado</span>
+              {% endif %}
+            </td>
           </tr>
+          {% empty %}
           <tr>
-            <td><input type="checkbox"></td>
-            <td>Isabela Santos</td>
-            <td>Ciências da Computação</td>
-            <td>Palestra sobre Cibersegurança</td>
-            <td>Segurança</td>
-            <td>2h</td>
-            <td>ℹ</td>
-            <td>👁</td>
-            <td>✔ ✖ ✏</td>
+            <td colspan="9" style="text-align: center; padding: 40px;">
+              Nenhum comprovante encontrado com os filtros aplicados.
+            </td>
           </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>Gabriel Costa</td>
-            <td>Sistemas de Informação</td>
-            <td>Hackathon de Inovação</td>
-            <td>Inovação</td>
-            <td>8h</td>
-            <td>ℹ</td>
-            <td>👁</td>
-            <td>✔ ✖ ✏</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>Mariana Almeida</td>
-            <td>Análise de Dados</td>
-            <td>Curso de Visualização de Dados</td>
-            <td>Análise</td>
-            <td>6h</td>
-            <td>ℹ</td>
-            <td>👁</td>
-            <td>✔ ✖ ✏</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>Rafael Pereira</td>
-            <td>Engenharia de Computação</td>
-            <td>Seminário de Robótica</td>
-            <td>Robótica</td>
-            <td>3h</td>
-            <td>ℹ</td>
-            <td>👁</td>
-            <td>✔ ✖ ✏</td>
-          </tr>
+          {% endfor %}
         </tbody>
       </table>
     </section>
   </main>
+
+  <!-- Modal para justificativa de rejeição -->
+  <div id="modal-rejeicao" class="modal-rejeicao">
+    <div class="modal-content">
+      <h3>Justificativa da Rejeição</h3>
+      <textarea id="justificativa-texto" rows="4" placeholder="Digite a justificativa para a rejeição..."></textarea>
+      <div style="margin-top: 15px;">
+        <button id="btn-confirmar-rejeicao" class="btn-rejeitar">Confirmar Rejeição</button>
+        <button id="btn-cancelar-rejeicao">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de logout -->
+  <div id="logoutModal" class="modal-overlay">
+    <div class="modal">
+      <h3>Confirmar Logout</h3>
+      <p>Tem certeza de que deseja sair da sua conta? Você precisará fazer login novamente para acessar o sistema.</p>
+      <div class="modal-buttons">
+        <button class="modal-btn modal-btn-cancel" onclick="closeLogoutModal()">Cancelar</button>
+        <button class="modal-btn modal-btn-logout" onclick="performLogout()">Sair da Conta</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || '{{ csrf_token }}';
+      let comprovanteSelecionado = null;
+      let isLote = false;
+      let idsSelecionados = [];
+
+      // Selecionar todos os checkboxes
+      document.getElementById('selecionar-todos').addEventListener('change', function(e) {
+        const checkboxes = document.querySelectorAll('.selecionar-item');
+        checkboxes.forEach(cb => cb.checked = e.target.checked);
+      });
+
+      // Aprovar individual
+      document.querySelectorAll('.btn-aprovar-individual').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const id = this.dataset.id;
+          if (confirm('Deseja aprovar este comprovante?')) {
+            aprovarComprovante(id);
+          }
+        });
+      });
+
+      // Rejeitar individual
+      document.querySelectorAll('.btn-rejeitar-individual').forEach(btn => {
+        btn.addEventListener('click', function() {
+          comprovanteSelecionado = this.dataset.id;
+          isLote = false;
+          document.getElementById('modal-rejeicao').style.display = 'block';
+        });
+      });
+
+      // Aprovar em lote
+      document.getElementById('btn-aprovar-lote').addEventListener('click', function() {
+        idsSelecionados = Array.from(document.querySelectorAll('.selecionar-item:checked'))
+          .map(cb => cb.value);
+        
+        if (idsSelecionados.length === 0) {
+          alert('Selecione pelo menos um comprovante.');
+          return;
+        }
+
+        if (confirm(`Deseja aprovar ${idsSelecionados.length} comprovante(s)?`)) {
+          acaoEmLote('aprovar', idsSelecionados);
+        }
+      });
+
+      // Rejeitar em lote
+      document.getElementById('btn-rejeitar-lote').addEventListener('click', function() {
+        idsSelecionados = Array.from(document.querySelectorAll('.selecionar-item:checked'))
+          .map(cb => cb.value);
+        
+        if (idsSelecionados.length === 0) {
+          alert('Selecione pelo menos um comprovante.');
+          return;
+        }
+
+        isLote = true;
+        document.getElementById('modal-rejeicao').style.display = 'block';
+      });
+
+      // Confirmar rejeição
+      document.getElementById('btn-confirmar-rejeicao').addEventListener('click', function() {
+        const justificativa = document.getElementById('justificativa-texto').value;
+        
+        if (!justificativa.trim()) {
+          alert('Por favor, digite uma justificativa.');
+          return;
+        }
+
+        if (isLote) {
+          acaoEmLote('rejeitar', idsSelecionados, justificativa);
+        } else {
+          rejeitarComprovante(comprovanteSelecionado, justificativa);
+        }
+
+        document.getElementById('modal-rejeicao').style.display = 'none';
+        document.getElementById('justificativa-texto').value = '';
+      });
+
+      // Cancelar rejeição
+      document.getElementById('btn-cancelar-rejeicao').addEventListener('click', function() {
+        document.getElementById('modal-rejeicao').style.display = 'none';
+        document.getElementById('justificativa-texto').value = '';
+      });
+
+      // Funções AJAX
+      function aprovarComprovante(id) {
+        fetch(`/aprovar-comprovante/${id}/`, {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': csrfToken,
+            'Content-Type': 'application/json',
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Comprovante aprovado com sucesso!');
+            location.reload();
+          } else {
+            alert('Erro ao aprovar comprovante: ' + data.error);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Erro ao processar a solicitação.');
+        });
+      }
+
+      function rejeitarComprovante(id, justificativa) {
+        fetch(`/rejeitar-comprovante/${id}/`, {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': csrfToken,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ justificativa: justificativa })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Comprovante rejeitado com sucesso!');
+            location.reload();
+          } else {
+            alert('Erro ao rejeitar comprovante: ' + data.error);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Erro ao processar a solicitação.');
+        });
+      }
+
+      function acaoEmLote(acao, ids, justificativa = '') {
+        fetch('/acao-em-lote/', {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': csrfToken,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ 
+            acao: acao, 
+            ids: ids,
+            justificativa: justificativa 
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert(`${data.count} comprovante(s) ${acao === 'aprovar' ? 'aprovado(s)' : 'rejeitado(s)'} com sucesso!`);
+            location.reload();
+          } else {
+            alert('Erro ao processar em lote: ' + data.error);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Erro ao processar a solicitação.');
+        });
+      }
+    });
+
+    // Funções para o modal de logout
+    function showLogoutModal() {
+      document.getElementById('logoutModal').style.display = 'flex';
+    }
+    
+    function closeLogoutModal() {
+      document.getElementById('logoutModal').style.display = 'none';
+    }
+    
+    function performLogout() {
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '{% url "logout" %}';
+      
+      const csrfInput = document.createElement('input');
+      csrfInput.type = 'hidden';
+      csrfInput.name = 'csrfmiddlewaretoken';
+      csrfInput.value = getCookie('csrftoken');
+      form.appendChild(csrfInput);
+      
+      document.body.appendChild(form);
+      form.submit();
+    }
+    
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    
+    document.getElementById('logoutModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeLogoutModal();
+      }
+    });
+    
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeLogoutModal();
+      }
+    });
+  </script>
 </body>
 </html>
-

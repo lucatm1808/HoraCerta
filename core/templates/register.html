@@ -1,41 +1,166 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'registro.css' %}">
-
 <!DOCTYPE html>
+{% load static %}
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Usuário</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'style_kaylane.css' %}">
+    <title>Registrar | Hora Certa</title>
+    <link rel="stylesheet" href="{% static 'register.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="form-container">
-        <img src="{% static 'logo.png' %}" alt="Logo" class="icon">
-        <h1 class="form-title">Crie sua conta</h1>
-        <p class="form-text">Preencha os campos abaixo para se registrar</p>
+        <div class="form-header">
+            <div class="form-icon">
+            <img src="{% static 'logo.png' %}" alt="Hora Certa" style="width: 60px; height: 60px; object-fit: contain;">
+        </div>
+            <h1 class="form-title">Criar Conta</h1>
+            <p class="form-subtitle">Registre-se para começar a gerenciar seus eventos</p>
+        </div>
 
-        <form method="POST">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="{% if message.tags == 'error' %}error-message{% else %}success-message{% endif %}">
+                    <i class="fas {% if message.tags == 'error' %}fa-exclamation-circle{% else %}fa-check-circle{% endif %}"></i>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'register' %}">
             {% csrf_token %}
-            <input type="text" name="nome" class="form-input" placeholder="Nome completo" required>
-            <input type="email" name="email" class="form-input" placeholder="E-mail" required>
-            <input type="password" name="senha" class="form-input" placeholder="Senha" required>
-            <input type="password" name="confirmar" class="form-input" placeholder="Confirmar senha" required>
+            
+            <div class="form-group">
+                <label class="form-label" for="nome">Nome Completo</label>
+                <input type="text" id="nome" name="nome" class="form-input" placeholder="Digite seu nome completo" required>
+            </div>
 
-            <label class="checkbox-container">
-                <input type="checkbox" class="form-checkbox" required>
-                Eu li e aceito os 
-                <a href="#" class="form-link">Termos de Uso</a> e a 
-                <a href="#" class="form-link">Política de Privacidade</a>.
-            </label>
+            <div class="form-group">
+                <label class="form-label" for="email">E-mail</label>
+                <input type="email" id="email" name="email" class="form-input" placeholder="seu@email.com" required>
+            </div>
 
-            <button type="submit" class="btn register">Registrar</button>
+            <div class="form-group">
+                <div class="input-group">
+                    <label class="form-label" for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" class="form-input" placeholder="Crie uma senha segura" required>
+                    <button type="button" class="password-toggle" onclick="togglePassword('senha')">
+                        <i class="far fa-eye"></i>
+                    </button>
+                </div>
+                <div class="password-strength">
+                    <div class="strength-bar" id="password-strength-bar"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <label class="form-label" for="confirmar">Confirmar Senha</label>
+                    <input type="password" id="confirmar" name="confirmar" class="form-input" placeholder="Confirme sua senha" required>
+                    <button type="button" class="password-toggle" onclick="togglePassword('confirmar')">
+                        <i class="far fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-help">
+                <label class="remember-me">
+                    <input type="checkbox" name="terms" class="form-checkbox" required>
+                    Aceito os <a href="#" class="terms-link">Termos de Uso</a>
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-user-plus btn-icon"></i>
+                Criar Conta
+            </button>
         </form>
 
-        <p class="form-login-text">Já tem uma conta? 
-            <a href="{% url 'inscricao' %}" class="form-link">Entrar</a>
-        </p>
+        <div class="form-footer">
+            <p>Já tem uma conta?
+                <a href="{% url 'login' %}" class="login-link">Faça login aqui</a>
+            </p>
+        </div>
     </div>
+
+    <script>
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const toggleBtn = input.nextElementSibling;
+            const icon = toggleBtn.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Validação de força da senha
+        document.getElementById('senha').addEventListener('input', function(e) {
+            const password = e.target.value;
+            const strengthBar = document.getElementById('password-strength-bar');
+            
+            // Remove classes anteriores
+            strengthBar.classList.remove('strength-weak', 'strength-medium', 'strength-strong');
+            
+            if (password.length === 0) {
+                strengthBar.style.width = '0%';
+                return;
+            }
+            
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            
+
+            if (strength <= 1) {
+                strengthBar.classList.add('strength-weak');
+            } else if (strength <= 2) {
+                strengthBar.classList.add('strength-medium');
+            } else {
+                strengthBar.classList.add('strength-strong');
+            }
+        });
+
+
+        document.getElementById('confirmar').addEventListener('input', function() {
+            const senha = document.getElementById('senha').value;
+            const confirmar = this.value;
+            
+            if (confirmar && senha !== confirmar) {
+                this.style.borderColor = '#ef4444';
+                this.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)';
+            } else {
+                this.style.borderColor = '#10b981';
+                this.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)';
+            }
+        });
+
+        // Animação de erro no formulário
+        function showErrorAnimation() {
+            const form = document.querySelector('form');
+            form.classList.add('shake');
+            setTimeout(() => {
+                form.classList.remove('shake');
+            }, 500);
+        }
+
+        // Se houver mensagens de erro, executa animação
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == 'error' %}
+                    setTimeout(showErrorAnimation, 300);
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </script>
 </body>
 </html>

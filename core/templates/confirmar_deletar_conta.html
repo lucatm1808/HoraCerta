@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Exclusão - Hora Certa</title>
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+    <style>
+        .warning-box {
+            background-color: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .warning-title {
+            color: #92400e;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .warning-text {
+            color: #92400e;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .account-info {
+            background-color: #f9fafb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .info-item {
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-danger {
+            background-color: #f44336;
+        }
+        
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+        
+        .btn-secondary {
+            background-color: #6b7280;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <img src="{% static 'logo.png' %}" alt="Logo Hora Certa" class="icon">
+        <h1 class="form-title">Confirmar Exclusão</h1>
+        <p class="form-text">Esta ação não pode ser desfeita</p>
+
+        <div class="warning-box">
+            <div class="warning-title">⚠️ Atenção!</div>
+            <div class="warning-text">
+                Todos os seus dados serão permanentemente removidos:
+                <ul style="margin-top: 10px; padding-left: 20px;">
+                    <li>Seu perfil e informações pessoais</li>
+                    <li>Eventos criados por você</li>
+                    <li>Histórico de horas complementares</li>
+                    <li>Todas as suas inscrições</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="account-info">
+            <div class="info-item"><strong>Nome:</strong> {{ request.user.first_name }}</div>
+            <div class="info-item"><strong>E-mail:</strong> {{ request.user.email }}</div>
+            <div class="info-item"><strong>Conta criada em:</strong> {{ request.user.date_joined|date:"d/m/Y" }}</div>
+        </div>
+
+        <form method="POST" action="{% url 'deletar_conta' %}">
+            {% csrf_token %}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza absoluta? Esta ação é IRREVERSÍVEL!')">
+                    Sim, excluir minha conta
+                </button>
+                <a href="{% url 'editar_perfil' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
