@@ -1,8 +1,10 @@
+/* Estilos específicos para a página de criação de evento */
 form label {
   display: block;
   font-weight: 500;
   margin-bottom: 6.4px;
   margin-top: 16px;
+  color: #374151;
 }
 
 input, select, textarea {
@@ -14,20 +16,122 @@ input, select, textarea {
   color: #111827;
   background: white;
   outline: none;
+  box-sizing: border-box;
 }
 
 input:focus, select:focus, textarea:focus {
   border-color: #2563eb;
-  box-shadow: 0 0 0 2px rgba(37,99,235,0.12);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
 }
 
-textarea { min-height: 80px; resize: vertical; }
+textarea { 
+  min-height: 80px; 
+  resize: vertical; 
+}
 
-.row { display: flex; gap: 16px; }
-.col { flex: 1; }
+.row { 
+  display: flex; 
+  gap: 16px; 
+  margin-bottom: 16px;
+}
+
+.col { 
+  flex: 1; 
+}
 
 .card h1, .card h2 {
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 8px;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #05AFF2;
+  color: white;
+  border: 2px solid #05C7F2;
+  text-align: center;
+  padding: 10px 20px;
+  margin-top: 16px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-right: 8px;
+}
+
+.btn:hover {
+  background-color: #0490d9;
+  border-color: #0490d9;
+}
+
+.alert {
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.alert-success {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.alert-error {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+/* Estilos específicos para formulário de criação */
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #111827;
+  text-align: center;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Botão secundário */
+.btn-secondary {
+  background-color: white;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.btn-secondary:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+}
+
+/* Botão de perigo */
+.btn-danger {
+  background-color: #ef4444;
+  color: white;
+  border-color: #dc2626;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+  border-color: #b91c1c;
 }

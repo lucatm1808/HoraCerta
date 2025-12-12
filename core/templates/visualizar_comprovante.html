@@ -1,0 +1,148 @@
+<!-- templates/visualizar_comprovante.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Comprovante</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .info-item {
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        .info-item strong {
+            display: block;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        .preview-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .preview-container img {
+            max-width: 100%;
+            max-height: 500px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .actions {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn-download {
+            background-color: #2196F3;
+            color: white;
+        }
+        .btn-back {
+            background-color: #607D8B;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Visualizar Comprovante</h1>
+        
+        <div class="info-grid">
+            <div class="info-item">
+                <strong>Aluno:</strong>
+                {{ comprovante.usuario.first_name }} {{ comprovante.usuario.last_name }}
+            </div>
+            <div class="info-item">
+                <strong>Matrícula:</strong>
+                {{ comprovante.usuario.perfil.matricula|default:"Não informada" }}
+            </div>
+            <div class="info-item">
+                <strong>Curso:</strong>
+                {{ comprovante.usuario.perfil.curso|default:"Não informado" }}
+            </div>
+            <div class="info-item">
+                <strong>Emissor:</strong>
+                {{ comprovante.emissor }}
+            </div>
+            <div class="info-item">
+                <strong>Carga Horária:</strong>
+                {{ comprovante.carga_horaria }} horas
+            </div>
+            <div class="info-item">
+                <strong>Data do Evento:</strong>
+                {{ comprovante.data_evento|date:"d/m/Y" }}
+            </div>
+            <div class="info-item">
+                <strong>Categoria:</strong>
+                {{ comprovante.get_categoria_sugerida_display }}
+            </div>
+            <div class="info-item">
+                <strong>Status:</strong>
+                <span style="color: 
+                    {% if comprovante.status == 'aprovado' %}#4CAF50
+                    {% elif comprovante.status == 'rejeitado' %}#f44336
+                    {% else %}#ff9800{% endif %};">
+                    {{ comprovante.get_status_display }}
+                </span>
+            </div>
+        </div>
+
+        <div class="preview-container">
+            <h3>Arquivo do Comprovante</h3>
+            {% if comprovante.arquivo.name|lower|slice:'-4:' == '.pdf' %}
+                <p>Arquivo PDF: <a href="{{ comprovante.arquivo.url }}" target="_blank">Abrir PDF</a></p>
+                <iframe src="{{ comprovante.arquivo.url }}" width="100%" height="500px" style="border: none;"></iframe>
+            {% elif comprovante.arquivo.name|lower|slice:'-4:' in '.jpg,.jpeg,.png,.gif' %}
+                <img src="{{ comprovante.arquivo.url }}" alt="Comprovante">
+            {% else %}
+                <p>Arquivo: <a href="{{ comprovante.arquivo.url }}" download>Baixar arquivo</a></p>
+            {% endif %}
+        </div>
+
+        {% if comprovante.justificativa %}
+        <div class="info-item">
+            <strong>Justificativa:</strong>
+            <p>{{ comprovante.justificativa }}</p>
+        </div>
+        {% endif %}
+
+        <div class="actions">
+            <a href="{{ comprovante.arquivo.url }}" download class="btn btn-download">
+                Baixar Comprovante
+            </a>
+            <button onclick="window.close()" class="btn btn-back">
+                Fechar Janela
+            </button>
+        </div>
+    </div>
+</body>
+</html>

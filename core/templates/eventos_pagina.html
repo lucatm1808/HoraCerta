@@ -1,100 +1,188 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hora Certa — Eventos</title>
-    <link rel="stylesheet" href="{% static 'style-evento.css' %}">
-  </head>
-  <body style="background-color:#f3f4f6;">
-    <div class="fonte">
-      <div style="border:2px solid #e5e7eb; background-color:#ffffff;">
-        <div style="text-align:left; padding:10px;">
-          <span style="color:#05AFF2; font-weight:bold;">Hora Certa</span>
-          <a href="#" style="margin-left:16px; color:#4b5563; text-decoration:none;">Categorias</a>
-          <a href="#" style="margin-left:8px; color:#4b5563; text-decoration:none;">Minha carteira</a>
-          <a href="#" style="margin-left:8px; color:#4b5563; text-decoration:none;">Criar evento</a>
-          <a href="#" style="margin-left:8px; color:#4b5563; text-decoration:none;">Admin</a>
-          <span style="float:right;">
-            <input type="search" placeholder="Procure eventos que valem horas…" style="background-color:#eef2f7; border:2px solid #e5e7eb; padding:6px; width:260px; color:#111827;" />
-          </span>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <title>Hora Certa — Eventos</title>
+  <link rel="stylesheet" href="{% static 'style-evento.css' %}">
+</head>
+<body>
+  <!-- Cabeçalho unificado -->
+  <header class="navbar">
+    <a href="#" class="logo">
+      <img src="{% static 'logo.png' %}" class="logo-icon" alt="Logo Hora Certa">
+      <span class="Hora">Hora</span><span class="Certa">Certa</span>
+    </a>
+    <nav>
+      <a href="{% url 'eventos_pagina' %}">Eventos</a>
+   <a href="{% url 'resumo_horas' %}">Carteira</a>
+      <a href="{% url 'envio_comprovante' %}">Enviar comprovante</a>
+      <a href="{% url 'listar_inscricoes' %}" class="active">Minhas Inscrições</a>
+      <a href="{% url 'perfil' %}">Perfil</a>
+      
+      {% if user.is_superuser %}
+        <a href="{% url 'criar_evento' %}">Criar Evento</a>
+        <a href="{% url 'validacao_horas' %}">Validação</a>
+      {% endif %}
+      
+      <!-- Barra de busca não é necessária nesta página -->
+      
+      <a class="logout-btn" onclick="showLogoutModal()">Sair</a>
+      <div class="avatar"></div>
+    </nav>
+  </header>
+
+  <!-- Conteúdo principal -->
+  <div class="container">
+    <!-- Mensagens -->
+    {% if messages %}
+    <div class="messages-container">
+      {% for message in messages %}
+      <div class="message {% if message.tags == 'success' %}message-success{% elif message.tags == 'error' %}message-error{% endif %}">
+        {{ message }}
       </div>
+      {% endfor %}
+    </div>
+    {% endif %}
 
-      <div style="max-width:1100px; margin:16px auto;">
-        <h2 class="titulo" style="font-size:22px; margin-bottom:2px;">Eventos</h2>
-        <p class="linha" style="margin-top:0;">Encontre os melhores eventos para suas horas complementares.</p>
+    <!-- Cabeçalho da página -->
+    <h1 class="titulo">Eventos</h1>
+    <p class="linha">Encontre os melhores eventos para suas horas complementares.</p>
 
-        <div style="margin:12px 0;">
-          <a class="pill ativa" href="#" style="margin-bottom:6px;">Eventos Acadêmicos</a>
-          <a class="pill" href="#" style="margin-bottom:6px;">Extensão</a>
-          <a class="pill" href="#" style="margin-bottom:6px;">Cultura</a>
-          <a class="pill" href="#" style="margin-bottom:6px;">Carreira</a>
-          <a class="pill" href="#" style="margin-bottom:6px;">Esporte</a>
-        </div>
+    <!-- Filtros por categoria -->
+    <div style="margin: 16px 0;">
+      <a href="#" class="pill ativa">Eventos Acadêmicos</a>
+      <a href="#" class="pill">Extensão</a>
+      <a href="#" class="pill">Cultura</a>
+      <a href="#" class="pill">Carreira</a>
+      <a href="#" class="pill">Esporte</a>
+    </div>
 
-        <div class="card" style="padding:0; margin-top:12px;">
-          <div style="height:170px; background-position:center; background-size:cover; border-bottom:2px solid #e5e7eb; background-image:url('https://images.ctfassets.net/lzny33ho1g45/66htcVa9cVmb0Qi82tXLGC/2ee85099eb977c4be48fd0c7aa7129f6/Group_12762.jpg?fm=jpg&q=31&fit=thumb&w=1520&h=760');"></div>
-          <div style="padding:12px;">
-            <p class="tag">Vale 2h em Eventos Acadêmicos</p>
-            <h3 class="titulo">Semana de Engenharia: Palestra de IA</h3>
-            <p class="linha">12/10, 18:00 · Auditório RDC / Online</p>
-            <p class="linha">Organizador: <span style="color:#374151; font-weight:bold;">Departamento de Engenharia</span></p>
-            <p class="linha">Requisitos: presença + certificado</p>
-            <a class="botao" href="evento.html" style="display:block; text-align:center; margin-top:10px;">Ver detalhes</a>
-          </div>
-        </div>
-
-        <div class="card" style="padding:0;">
-          <div style="height:170px; background-position:center; background-size:cover; border-bottom:2px solid #e5e7eb; background-image:url('https://digitalleadership.com/wp-content/uploads/2022/06/Design-Thinking-Idea-Generation-Technique.webp');"></div>
-          <div style="padding:12px;">
-            <p class="tag">Vale 2h em Eventos Acadêmicos</p>
-            <h3 class="titulo">Workshop de Design Thinking</h3>
-            <p class="linha">15/10, 14:00 · Sala 302, Bloco C</p>
-            <p class="linha">Organizador: <span style="color:#374151; font-weight:bold;">Curso de Design</span></p>
-            <p class="linha">Requisitos: presença + certificado</p>
-            <a class="botao" href="#" style="display:block; text-align:center; margin-top:10px;">Ver detalhes</a>
-          </div>
-        </div>
-
-        <div class="card" style="padding:0;">
-          <div style="height:170px; background-position:center; background-size:cover; border-bottom:2px solid #e5e7eb; background-image:url('https://jornaldr1.com.br/wp-content/uploads/2024/07/Copia-de-CLUBE-DE-CINEMA-NA-PRACA-DIA1-27-scaled.jpg');"></div>
-          <div style="padding:12px;">
-            <p class="tag" style="background-color:#fff7ed; color:#b45309;">Vale 3h em Cultura</p>
-            <h3 class="titulo">Cineclube: Cinema Novo</h3>
-            <p class="linha">18/10, 19:00 · Auditório Principal</p>
-            <p class="linha">Organizador: <span style="color:#374151; font-weight:bold;">Centro Acadêmico de Cinema</span></p>
-            <p class="linha">Requisitos: presença + relatório</p>
-            <a class="botao" href="#" style="display:block; text-align:center; margin-top:10px;">Ver detalhes</a>
-          </div>
-        </div>
-
-        <div class="card" style="padding:0;">
-          <div style="height:170px; background-position:center; background-size:cover; border-bottom:2px solid #e5e7eb; background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3S520a5c4f-AYahpxuE-x6lSTLXYLcC67rQ&s');"></div>
-          <div style="padding:12px;">
-            <p class="tag" style="background-color:#ecfeff; color:#0369a1;">Vale 4h em Extensão</p>
-            <h3 class="titulo">Feira de Carreiras 2024</h3>
-            <p class="linha">22/10, 09:00 - 17:00 · Ginásio Poliesportivo</p>
-            <p class="linha">Organizador: <span style="color:#374151; font-weight:bold;">Pró-Reitoria de Graduação</span></p>
-            <p class="linha">Requisitos: presença</p>
-            <a class="botao" href="#" style="display:block; text-align:center; margin-top:10px;">Ver detalhes</a>
-          </div>
-        </div>
-
-        <div class="card" style="border-color:#e5e7eb; text-align:center;">
-          <a class="botao" href="#" style="float:left;">« Anterior</a>
-          <a class="botao" href="#" style="float:right;">Próximo »</a>
-          <h3 class="titulo" style="margin:6px 0;">Setembro</h3>
-          <div style="clear:both;"></div>
-          <table border-color="1" style="margin:10px auto;">
-            <tr><td>D</td><td>S</td><td>T</td><td>Q</td><td>Q</td><td>S</td><td>S</td></tr>
-            <tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr>
-            <tr><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td></tr>
-            <tr><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td></tr>
-            <tr><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td></tr>
-            <tr><td>29</td><td>30</td><td></td><td></td><td></td><td></td><td></td></tr>
-          </table>
-        </div>
+    <!-- Lista de eventos -->
+    {% for evento in eventos %}
+    <div class="card">
+      {% if evento.imagem_url %}
+      <div style="height:160px; background-position:center; background-size:cover; border-bottom:2px solid #e5e7eb; margin:-16px -16px 16px -16px; border-radius:6px 6px 0 0; background-image:url('{{ evento.imagem_url }}');"></div>
+      {% endif %}
+      
+      <span class="tag">{{ evento.horas }}h em {{ evento.categoria|default:"Eventos Acadêmicos" }}</span>
+      
+      <h3 class="titulo" style="font-size:20px; margin:8px 0;">{{ evento.titulo }}</h3>
+      
+      <p class="linha">{{ evento.data }}, {{ evento.hora }} · {{ evento.local }}</p>
+      
+      <p class="linha">Organizador: <strong style="color:#374151;">{{ evento.organizador }}</strong></p>
+      
+      <p class="linha" style="margin-bottom:16px;">Requisitos: {{ evento.requisitos|default:"presença + certificado" }}</p>
+      
+      <div class="acoes-linha">
+        <a href="{% url 'evento' evento.id %}" class="botao" style="flex:1; text-align:center;">Ver detalhes</a>
+        
+        <!-- Mostrar botões de editar/excluir apenas para admin ou criador do evento -->
+        {% if user.is_superuser or evento.criado_por == user %}
+          <a href="{% url 'editar_evento' evento.id %}" class="botao" style="flex:1; text-align:center;">Editar</a>
+          
+          <form method="post" action="{% url 'deletar_evento' evento.id %}" style="flex:1; margin:0;">
+            {% csrf_token %}
+            <button type="submit" 
+                    class="botao" 
+                    onclick="return confirm('Tem certeza que deseja excluir o evento \"{{ evento.titulo }}\"?')"
+                    style="width:100%; background-color:#f44336; border-color:#d32f2f;">
+              Excluir
+            </button>
+          </form>
+        {% endif %}
       </div>
     </div>
-  </body>
+    {% empty %}
+    <div class="empty-state">
+      <h3 class="empty-title">Nenhum evento encontrado</h3>
+      <p class="empty-text">Seja o primeiro a criar um evento!</p>
+      {% if user.is_superuser %}
+        <a href="{% url 'criar_evento' %}" class="botao" style="display:inline-block; padding:10px 24px;">Criar Primeiro Evento</a>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <!-- Paginação -->
+    <div class="card" style="text-align:center;">
+      <div class="pagination">
+        <a href="#" class="botao" style="padding:6px 12px;">« Anterior</a>
+        <span class="page-info">Página 1</span>
+        <a href="#" class="botao" style="padding:6px 12px;">Próximo »</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de logout -->
+  <div id="logoutModal" class="modal-overlay">
+    <div class="modal">
+      <h3>Confirmar Logout</h3>
+      <p>Tem certeza de que deseja sair da sua conta? Você precisará fazer login novamente para acessar o sistema.</p>
+      <div class="modal-buttons">
+        <button class="modal-btn modal-btn-cancel" onclick="closeLogoutModal()">Cancelar</button>
+        <button class="modal-btn modal-btn-logout" onclick="performLogout()">Sair da Conta</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Funções para o modal de logout
+    function showLogoutModal() {
+      document.getElementById('logoutModal').style.display = 'flex';
+    }
+    
+    function closeLogoutModal() {
+      document.getElementById('logoutModal').style.display = 'none';
+    }
+    
+    function performLogout() {
+      // Criar um formulário dinamicamente para fazer logout via POST
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '{% url "logout" %}';
+      
+      // Adicionar CSRF token
+      const csrfInput = document.createElement('input');
+      csrfInput.type = 'hidden';
+      csrfInput.name = 'csrfmiddlewaretoken';
+      csrfInput.value = getCookie('csrftoken');
+      form.appendChild(csrfInput);
+      
+      // Adicionar ao corpo e submeter
+      document.body.appendChild(form);
+      form.submit();
+    }
+    
+    // Função para obter o cookie CSRF token
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    
+    // Fechar modal ao clicar fora
+    document.getElementById('logoutModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeLogoutModal();
+      }
+    });
+    
+    // Fechar modal com a tecla ESC
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeLogoutModal();
+      }
+    });
+  </script>
+</body>
 </html>

@@ -14,7 +14,7 @@ body {
     border-radius: 10px;
 }
 
-/* Header */
+
 header {
     display: flex;
     justify-content: space-between;
@@ -42,7 +42,7 @@ nav ul li a {
     font-weight: bold;
 }
 
-/* Formulário */
+
 .form-section {
     margin-top: 20px;
 }
@@ -107,7 +107,7 @@ nav ul li a {
     opacity: 0.8;
 }
 
-/* Estilos específicos para a área de upload */
+
 .upload-area {
     margin-bottom: 15px;
     text-align: center;
@@ -130,7 +130,7 @@ nav ul li a {
     font-weight: bold;
 }
 
-/* Requisitos do Certificado */
+
 .checkbox-group {
     margin-top: 10px;
 }

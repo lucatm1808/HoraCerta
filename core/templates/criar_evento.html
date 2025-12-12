@@ -1,36 +1,46 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'base.css' %}">
-<link rel="stylesheet" href="{% static 'criar_evento.css' %}">
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hora Certa - Criação de Evento</title>
-  <link rel="stylesheet" href="{% static 'style_kaylane.css' %}">
+  <link rel="stylesheet" href="{% static 'style-evento.css' %}">
+  <link rel="stylesheet" href="{% static 'criar_evento.css' %}">
 </head>
 <body>
+  <!-- Navbar padrão -->
   <header class="navbar">
-    <div class="logo">
+    <a href="{% url 'eventos_pagina' %}" class="logo">
       <img src="{% static 'logo.png' %}" class="logo-icon" alt="Logo Hora Certa">
       <span class="Hora">Hora</span><span class="Certa">Certa</span>
-    </div>
+    </a>
     <nav>
-      <a href="{% url 'kaylane_home' %}">Início</a>
-      <a href="{% url 'criar_evento' %}">Eventos</a>
-      <a href="#">Certificados</a>
+      <a href="{% url 'eventos_pagina' %}">Eventos</a>
+      <a href="{% url 'resumo_horas' %}">Carteira</a>
+      <a href="{% url 'envio_comprovante' %}">Enviar comprovante</a>
+      <a href="{% url 'listar_inscricoes' %}" class="active">Minhas Inscrições</a>
       <a href="{% url 'perfil' %}">Perfil</a>
+      
+      {% if user.is_superuser %}
+        <a href="{% url 'criar_evento' %}">Criar Evento</a>
+        <a href="{% url 'validacao_horas' %}">Validação</a>
+      {% endif %}
+      
+      <!-- Barra de busca não é necessária nesta página -->
+      
+      <a class="logout-btn" onclick="showLogoutModal()">Sair</a>
       <div class="avatar"></div>
     </nav>
   </header>
 
-  <main class="container main-content">
+  <main class="container">
     <div class="card">
-      <h1>Criar evento</h1>
-      <p class="subtitle">Preencha os campos abaixo para criar um novo evento.</p>
+      <h1 class="titulo">Criar evento</h1>
+      <p class="linha">Preencha os campos abaixo para criar um novo evento.</p>
 
       {% if success %}
-      <div class="alert success">
+      <div class="alert alert-success">
         Evento "{{ titulo }}" salvo com sucesso!
       </div>
       {% endif %}
@@ -85,5 +95,70 @@
       </form>
     </div>
   </main>
+
+  <!-- Modal de logout -->
+  <div id="logoutModal" class="modal-overlay">
+    <div class="modal">
+      <h3>Confirmar Logout</h3>
+      <p>Tem certeza de que deseja sair da sua conta? Você precisará fazer login novamente para acessar o sistema.</p>
+      <div class="modal-buttons">
+        <button class="modal-btn modal-btn-cancel" onclick="closeLogoutModal()">Cancelar</button>
+        <button class="modal-btn modal-btn-logout" onclick="performLogout()">Sair da Conta</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Funções para o modal de logout
+    function showLogoutModal() {
+      document.getElementById('logoutModal').style.display = 'flex';
+    }
+    
+    function closeLogoutModal() {
+      document.getElementById('logoutModal').style.display = 'none';
+    }
+    
+    function performLogout() {
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '{% url "logout" %}';
+      
+      const csrfInput = document.createElement('input');
+      csrfInput.type = 'hidden';
+      csrfInput.name = 'csrfmiddlewaretoken';
+      csrfInput.value = getCookie('csrftoken');
+      form.appendChild(csrfInput);
+      
+      document.body.appendChild(form);
+      form.submit();
+    }
+    
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    
+    document.getElementById('logoutModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeLogoutModal();
+      }
+    });
+    
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeLogoutModal();
+      }
+    });
+  </script>
 </body>
 </html>
